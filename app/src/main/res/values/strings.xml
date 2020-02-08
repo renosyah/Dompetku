@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Dompetku_PROTOTYPE</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_report">Report</string>
+    <string name="menu_home">Home</string>
+    <string name="press_to_exit">Press once again to exit</string>
+    <string name="menu_setting">Setting</string>
+</resources>
