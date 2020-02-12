@@ -1,7 +1,7 @@
 package com.syahputrareno975.dompetku.di.component;
 
 import com.syahputrareno975.dompetku.di.module.ActivityModule;
-import com.syahputrareno975.dompetku.ui.activity.mainMenu.MainMenuActivity;
+import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivity;
 
 import dagger.Component;
 

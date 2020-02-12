@@ -9,6 +9,7 @@ import com.syahputrareno975.dompetku.db.AppDatabase;
 import com.syahputrareno975.dompetku.interfaces.TransactionDao;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 
+import java.sql.Date;
 import java.util.List;
 
 public class TransactionRepository {
@@ -19,12 +20,16 @@ public class TransactionRepository {
         transactionDao = AppDatabase.getDatabase(application).transactionDao();
     }
 
-    public LiveData<List<TransactionModel>> all(int account_id,String by,boolean isAsc,int offset, int limit) {
-        return transactionDao.all(account_id, by, isAsc, offset, limit);
+    public LiveData<List<TransactionModel>> all(String by,boolean isAsc,int offset, int limit) {
+        return transactionDao.all(by, isAsc, offset, limit);
     }
 
-    public LiveData<TransactionModel> one(int id) {
-        return transactionDao.one(id);
+    public LiveData<Double> total(Date start,Date end) {
+        return transactionDao.total(start, end);
+    }
+
+    public LiveData<Double> total() {
+        return transactionDao.total();
     }
 
     public void add(final TransactionModel c) {

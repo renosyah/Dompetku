@@ -1,8 +1,8 @@
 package com.syahputrareno975.dompetku.di.module;
 
 import android.app.Activity;
-import com.syahputrareno975.dompetku.ui.activity.mainMenu.MainMenuActivityContract;
-import com.syahputrareno975.dompetku.ui.activity.mainMenu.MainMenuActivityPresenter;
+import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivityContract;
+import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;

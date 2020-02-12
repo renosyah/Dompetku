@@ -5,6 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.syahputrareno975.dompetku.repository.TransactionRepository;
+
+import java.sql.Date;
 import java.util.List;
 
 public class TransactionViewModel extends AndroidViewModel {
@@ -16,12 +18,16 @@ public class TransactionViewModel extends AndroidViewModel {
         repository = new TransactionRepository(application);
     }
 
-    public LiveData<List<TransactionModel>> all(int account_id,String by,boolean isAsc,int offset, int limit){
-        return repository.all(account_id, by, isAsc, offset, limit);
+    public LiveData<List<TransactionModel>> all(String by,boolean isAsc,int offset, int limit){
+        return repository.all(by, isAsc, offset, limit);
     }
 
-    public LiveData<TransactionModel> one(int id){
-        return repository.one(id);
+    public LiveData<Double> total(Date start, Date end){
+        return repository.total(start, end);
+    }
+
+    public LiveData<Double> total(){
+        return repository.total();
     }
 
     public void add(TransactionModel c){

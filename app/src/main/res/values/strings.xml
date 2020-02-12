@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dompetku_PROTOTYPE</string>
+    <string name="app_name">Dompetku</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_report">Report</string>
     <string name="menu_home">Home</string>
@@ -22,4 +22,7 @@
     <string name="account_added">New Account Added!</string>
     <string name="maximum_account">Maximum Account Reached!</string>
     <string name="click_to_edit">Click To Edit</string>
+    <string name="food_expense">Food Expense</string>
+    <string name="transport_expense">Transport</string>
+    <string name="common_expense">Common Expense</string>
 </resources>

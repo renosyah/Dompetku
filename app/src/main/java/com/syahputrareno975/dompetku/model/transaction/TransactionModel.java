@@ -17,11 +17,8 @@ public class TransactionModel extends BaseModel {
     @ColumnInfo(name = "id")
     private int Id;
 
-    @ColumnInfo(name = "account_id")
-    private int AccountId;
-
-    @ColumnInfo(name = "currency_id")
-    private int CurrencyId;
+    @ColumnInfo(name = "currency")
+    private String Currency;
 
     @ColumnInfo(name = "amount")
     private Double Amount;
@@ -39,13 +36,22 @@ public class TransactionModel extends BaseModel {
         super();
     }
 
-    public TransactionModel(int accountId, int currencyId, Double amount, String description, Date date, int flow) {
-        AccountId = accountId;
-        CurrencyId = currencyId;
+    public TransactionModel(int id, String currency, Double amount, String description, java.sql.Date date, int flow) {
+        Id = id;
+        Currency = currency;
         Amount = amount;
         Description = description;
         Date = date;
         Flow = flow;
+    }
+
+    @NonNull
+    public String getCurrency() {
+        return Currency;
+    }
+
+    public void setCurrency(String currency) {
+        Currency = currency;
     }
 
     @NonNull
@@ -55,24 +61,6 @@ public class TransactionModel extends BaseModel {
 
     public void setId(int id) {
         Id = id;
-    }
-
-    @NonNull
-    public int getAccountId() {
-        return AccountId;
-    }
-
-    public void setAccountId(int accountId) {
-        AccountId = accountId;
-    }
-
-    @NonNull
-    public int getCurrencyId() {
-        return CurrencyId;
-    }
-
-    public void setCurrencyId(int currencyId) {
-        CurrencyId = currencyId;
     }
 
     @NonNull
