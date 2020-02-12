@@ -33,8 +33,8 @@ public class MainMenuActivityPresenter implements MainMenuActivityContract.Prese
     public void getBallance() {
         this.transactionViewModel.total().observe((LifecycleOwner) view, new Observer<Double>() {
             @Override
-            public void onChanged(Double aDouble) {
-                view.onGetBallance(aDouble);
+            public void onChanged(Double t) {
+                view.onGetBallance(t);
             }
         });
     }

@@ -25,4 +25,16 @@
     <string name="food_expense">Food Expense</string>
     <string name="transport_expense">Transport</string>
     <string name="common_expense">Common Expense</string>
+    <string name="add_expense_title">Expense</string>
+    <string name="add_date">Date</string>
+    <string name="add_expense_amount">Amount</string>
+    <string name="add_expense_des">Description</string>
+    <string name="add_expense_des_text">Click To Add Description</string>
+    <string name="add_expense_amount_text">0</string>
+    <string name="save">Save</string>
+    <string name="add_income_des_text">Click To Add Description</string>
+    <string name="add_income_title">Income</string>
+    <string name="add_income_des">Description</string>
+    <string name="add_income_amount">Amount</string>
+    <string name="data_income_is_not_valid">Data Income is not valid!</string>
 </resources>

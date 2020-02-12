@@ -24,7 +24,7 @@ public class TransactionRepository {
         return transactionDao.all(by, isAsc, offset, limit);
     }
 
-    public LiveData<Double> total(Date start,Date end) {
+    public LiveData<Double> total(Date start, Date end) {
         return transactionDao.total(start, end);
     }
 

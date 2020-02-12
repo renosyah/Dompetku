@@ -6,10 +6,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.syahputrareno975.dompetku.BuildConfig;
 import com.syahputrareno975.dompetku.R;
@@ -17,11 +20,15 @@ import com.syahputrareno975.dompetku.di.component.ActivityComponent;
 import com.syahputrareno975.dompetku.di.component.DaggerActivityComponent;
 import com.syahputrareno975.dompetku.di.module.ActivityModule;
 import com.syahputrareno975.dompetku.model.menu.MenuModel;
+import com.syahputrareno975.dompetku.ui.activity.expenseActivity.ExpenseActivity;
+import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivity;
 import com.syahputrareno975.dompetku.ui.adapter.menuAdapter.MenuAdapter;
 
 import java.text.DecimalFormat;
 
 import javax.inject.Inject;
+
+import static com.syahputrareno975.dompetku.util.Formatter.formatter;
 
 public class MainMenuActivity extends AppCompatActivity implements MainMenuActivityContract.View {
 
@@ -36,7 +43,6 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
 
     private RecyclerView menu;
 
-    private DecimalFormat formatter = new DecimalFormat("##.###");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,7 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         ballanceLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(context,IncomeActivity.class));
             }
         });
 
@@ -77,10 +83,13 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
             public void onItemClick(@NonNull MenuModel m, int pos) {
                 switch (m.Id){
                     case MenuModel.ID_FOOD_EXPENSE:
-                        break;
                     case MenuModel.ID_TRANSPORT_EXPENSE:
-                        break;
                     case MenuModel.ID_COMMON_NEED_EXPENSE:
+
+                        Intent i = new Intent(context, ExpenseActivity.class);
+                        i.putExtra("menu",m);
+                        startActivity(i);
+
                         break;
                     case MenuModel.ID_REPORT:
                         break;
@@ -91,11 +100,13 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         }));
         menu.setLayoutManager(new GridLayoutManager(context,2));
 
+        presenter.getBallance();
     }
+
 
     @Override
     public void onGetBallance(Double total) {
-        if (total!=null) balance.setText(BuildConfig.CURRENCY  + " "+formatter.format(total));
+        if (total!=null) balance.setText(BuildConfig.CURRENCY  + " " + formatter.format(total));
     }
 
     @Override
@@ -107,8 +118,6 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
     public void showError(String error) {
 
     }
-
-
 
 
     @Override

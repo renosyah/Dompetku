@@ -2,6 +2,7 @@ package com.syahputrareno975.dompetku.ui.dialog;
 
 import android.app.Activity;
 import android.content.Context;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ public class DialogSimpleEditText {
     private OnDialogListener listener;
     private String title;
     private String text;
+    private boolean typeNumber = false;
 
     public DialogSimpleEditText(Context context, String title,String text,OnDialogListener listener) {
         this.context = context;
@@ -24,12 +26,23 @@ public class DialogSimpleEditText {
         this.text = text;
     }
 
+    public DialogSimpleEditText(Context context,String title, String text, OnDialogListener listener,  boolean typeNumber) {
+        this.context = context;
+        this.listener = listener;
+        this.title = title;
+        this.text = text;
+        this.typeNumber = typeNumber;
+    }
+
     public void show(){
         View v = ((Activity)context).getLayoutInflater().inflate(R.layout.edit_text_dialog,null);
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
 
         final EditText text_editText = v.findViewById(R.id.text_editText);
         text_editText.setText(text);
+        if (typeNumber){
+            text_editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
 
         TextView title_textview = v.findViewById(R.id.title_textview);
         title_textview.setText(title);
@@ -63,7 +76,7 @@ public class DialogSimpleEditText {
     }
 
     public interface OnDialogListener {
-        void onOk(@NonNull String text);
+        void onOk(String text);
         void onEmpty();
         void onCancel();
     }

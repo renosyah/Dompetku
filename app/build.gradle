@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -28,6 +32,7 @@ android {
             it.buildConfigField "String", "DB_NAME", "\"dompet_db\""
             it.buildConfigField "int", "MAX_ACCOUNT", "5"
             it.buildConfigField "String", "CURRENCY", "\"Rp\""
+            it.resValue "string", "currency", "Rp"
         }
     }
 }
@@ -76,6 +81,9 @@ dependencies {
     implementation 'com.tapadoo.android:alerter:5.1.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
+
+    // date picker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
 }
 kapt {

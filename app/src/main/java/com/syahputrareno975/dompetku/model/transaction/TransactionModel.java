@@ -17,6 +17,9 @@ public class TransactionModel extends BaseModel {
     @ColumnInfo(name = "id")
     private int Id;
 
+    @ColumnInfo(name = "category_code")
+    private int CategoryCode;
+
     @ColumnInfo(name = "currency")
     private String Currency;
 
@@ -36,8 +39,9 @@ public class TransactionModel extends BaseModel {
         super();
     }
 
-    public TransactionModel(int id, String currency, Double amount, String description, java.sql.Date date, int flow) {
-        Id = id;
+
+    public TransactionModel(int categoryCode, String currency, Double amount, String description, java.sql.Date date, int flow) {
+        CategoryCode = categoryCode;
         Currency = currency;
         Amount = amount;
         Description = description;
@@ -81,7 +85,6 @@ public class TransactionModel extends BaseModel {
         Description = description;
     }
 
-    @NonNull
     public Date getDate() {
         return Date;
     }
@@ -97,5 +100,13 @@ public class TransactionModel extends BaseModel {
 
     public void setFlow(int flow) {
         Flow = flow;
+    }
+
+    public int getCategoryCode() {
+        return CategoryCode;
+    }
+
+    public void setCategoryCode(int categoryCode) {
+        CategoryCode = categoryCode;
     }
 }
