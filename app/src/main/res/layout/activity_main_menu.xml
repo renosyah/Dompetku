@@ -7,33 +7,4 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.mainMenu.MainMenuActivity">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <FrameLayout
-            android:id="@+id/content_fragment_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-    </FrameLayout>
-
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/menu_bottom_nav_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:menu="@menu/bottom_nav_menu" />
-
-    </androidx.cardview.widget.CardView>
-
-
-</LinearLayout>
+    tools:context=".ui.activity.mainMenu.MainMenuActivity"/>

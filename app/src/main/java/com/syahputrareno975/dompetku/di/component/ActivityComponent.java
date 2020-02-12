@@ -7,7 +7,7 @@ import dagger.Component;
 
 @Component(modules = { ActivityModule.class })
 public interface ActivityComponent {
-    // add for each new activity
 
+    // add for each new activity
     public void inject(MainMenuActivity mainMenuActivity);
 }

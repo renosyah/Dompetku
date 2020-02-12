@@ -11,14 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service
-            android:name="com.syahputrareno975.dompetku.service.NotifService"
-            android:process=":externalProcess"
-            android:stopWithTask="false"
-            android:enabled="true"
-            android:exported="true"></service>
+        <activity android:name=".ui.activity.addAccount.AddAccountActivity"></activity>
 
-        <activity android:name="com.syahputrareno975.dompetku.ui.activity.mainMenu.MainMenuActivity">
+        <service
+            android:name=".service.NotifService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":externalProcess"
+            android:stopWithTask="false" />
+
+        <activity android:name=".ui.activity.mainMenu.MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

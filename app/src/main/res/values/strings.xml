@@ -5,4 +5,21 @@
     <string name="menu_home">Home</string>
     <string name="press_to_exit">Press once again to exit</string>
     <string name="menu_setting">Setting</string>
+    <string name="title">Dompetku</string>
+    <string name="add_income">Add Income</string>
+    <string name="add_expense">Add Expense</string>
+    <string name="balance_title">Balance</string>
+    <string name="add_account">+ Add Account</string>
+    <string name="title_add_account">Add Account</string>
+    <string name="icon_title">Icon</string>
+    <string name="add_account_button">Add Account</string>
+    <string name="add_account_name">Account Name</string>
+    <string name="add_account_des">Description</string>
+    <string name="add_account_currency">Currency</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="cannot_empty">Value Cannot Be Empty!</string>
+    <string name="account_added">New Account Added!</string>
+    <string name="maximum_account">Maximum Account Reached!</string>
+    <string name="click_to_edit">Click To Edit</string>
 </resources>

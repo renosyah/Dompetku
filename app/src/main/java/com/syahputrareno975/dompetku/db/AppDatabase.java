@@ -1,25 +1,27 @@
 package com.syahputrareno975.dompetku.db;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import com.syahputrareno975.dompetku.BuildConfig;
+import com.syahputrareno975.dompetku.interfaces.TransactionDao;
 import com.syahputrareno975.dompetku.interfaces.UserDao;
+import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.model.user.UserModel;
-
+import com.syahputrareno975.dompetku.util.Converters;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import kotlin.jvm.Volatile;
 
-@Database(entities = { UserModel.class /* add more class */ }, version = 1, exportSchema = false)
+@Database(entities = { UserModel.class, TransactionModel.class /* add more class */ }, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase  {
     public abstract UserDao userDao();
+    public abstract TransactionDao transactionDao();
     /* add more dao */
 
     @Volatile
