@@ -31,4 +31,19 @@ public class MenuModel extends BaseModel {
         menus.add(new MenuModel(ID_REPORT, R.drawable.report_menu,c.getString(R.string.menu_report)));
         return menus;
     }
+
+
+    public static final int ID_REPORT_LIST = 0;
+    public static final int ID_REPORT_LINE_DIAGRAM = 1;
+    public static final int ID_REPORT_PIE_DIAGRAM = 2;
+    public static final int ID_REPORT_WATERFALL_DIAGRAM = 3;
+
+    public static ArrayList<MenuModel> getReportMenuList(Context c) {
+        ArrayList<MenuModel> menus = new ArrayList<>();
+        menus.add(new MenuModel(ID_REPORT_LIST, R.drawable.list_diagram,c.getString(R.string.list_report_title_menu)));
+        menus.add(new MenuModel(ID_REPORT_LINE_DIAGRAM, R.drawable.line_diagram,c.getString(R.string.line_diagram_report_title_menu)));
+        menus.add(new MenuModel(ID_REPORT_PIE_DIAGRAM, R.drawable.pie,c.getString(R.string.pie_diagram_report_title_menu)));
+        menus.add(new MenuModel(ID_REPORT_WATERFALL_DIAGRAM, R.drawable.waterfall_diagram,c.getString(R.string.waterfall_diagram_report_title_menu)));
+        return menus;
+    }
 }

@@ -37,4 +37,22 @@
     <string name="add_income_des">Description</string>
     <string name="add_income_amount">Amount</string>
     <string name="data_income_is_not_valid">Data Income is not valid!</string>
+    <string name="date_report">Date</string>
+    <string name="des_report">Description</string>
+    <string name="amount_report">Amount</string>
+    <string name="report_is_empty">Report Is Empty</string>
+    <string name="report_menu_title">Report Menu</string>
+    <string name="list_report_title_menu">List Report</string>
+    <string name="line_diagram_report_title_menu">Line Diagram</string>
+    <string name="pie_diagram_report_title_menu">Pie Diagram</string>
+    <string name="waterfall_diagram_report_title_menu">Waterfall Diagram</string>
+    <string name="pie_chart_report_string"><![CDATA[Pie Chart Income & Expense]]></string>
+    <string name="flow_piechart_legend_title">Type Transaction</string>
+    <string name="textColorGreen">#4CAF50</string>
+    <string name="textColorRed">#F44336</string>
+    <string name="textColorGray">#616161</string>
+    <string name="waterfall_chart_report_string"><![CDATA[WaterFall Chart Income & Expense]]></string>
+    <string name="scale_million">Mil</string>
+    <string name="money_in_currency">Total Money</string>
+    <string name="line_chart_report"><![CDATA[Line Chart Income & Expense]]></string>
 </resources>

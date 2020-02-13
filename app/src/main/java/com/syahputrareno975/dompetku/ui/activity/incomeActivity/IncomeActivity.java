@@ -1,8 +1,12 @@
 package com.syahputrareno975.dompetku.ui.activity.incomeActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,18 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.anychart.core.polar.series.Line;
 import com.syahputrareno975.dompetku.BuildConfig;
 import com.syahputrareno975.dompetku.R;
 import com.syahputrareno975.dompetku.di.component.ActivityComponent;
 import com.syahputrareno975.dompetku.di.component.DaggerActivityComponent;
 import com.syahputrareno975.dompetku.di.module.ActivityModule;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
+import com.syahputrareno975.dompetku.ui.adapter.listReportAdapter.ListReportAdapter;
 import com.syahputrareno975.dompetku.ui.dialog.DialogSimpleEditText;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 import java.sql.Date;
-import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -46,6 +52,12 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
 
     private Button save;
 
+    private NestedScrollView scroll;
+    private RecyclerView listTransaction;
+    private ListReportAdapter listReportAdapter;
+    private ArrayList<TransactionModel> transactions = new ArrayList<TransactionModel>();
+    private int offset = 0,limit = 15;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +74,7 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
 
         date = findViewById(R.id.date_income_textview);
         Calendar cal = Calendar.getInstance();
-        income.setDate(new Date(cal.getTimeInMillis()));
+        income.setDate(new Date(cal.getTime().getTime()));
         date.setText(income.getDate().toString());
 
         des = findViewById(R.id.des_income_textview);
@@ -91,7 +103,7 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
                                 cal.set(Calendar.YEAR, year);
                                 cal.set(Calendar.MONTH, monthOfYear);
                                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                                income.setDate(new Date(cal.getTimeInMillis()));
+                                income.setDate(new Date(cal.getTime().getTime()));
                                 date.setText(income.getDate().toString());
                             }
                         },
@@ -172,11 +184,49 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
             }
         });
 
+
+        // for header
+        transactions.add(new TransactionModel(true));
+
+        listReportAdapter = new ListReportAdapter(context, transactions, new ListReportAdapter.OnListReportAdapterListener() {
+            @Override
+            public void onClick(@NonNull TransactionModel t, int pos) {
+                // dialog delete transaction
+
+            }
+        });
+
+        listTransaction = findViewById(R.id.list_tansaction_recycleview);
+        listTransaction.setAdapter(listReportAdapter);
+        listTransaction.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
+
+
+        scroll = findViewById(R.id.income_scroll_nestedscrollview);
+        scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
+                    // pagination if user reach scroll to bottom on course
+                    offset += limit;
+                    presenter.getAllTransactionIncome(offset,limit);
+                }
+            }
+        });
+
+
+        // get all record transaction income
+        presenter.getAllTransactionIncome(offset,limit);
     }
 
     @Override
     public void onAddIncome() {
         finish();
+    }
+
+    @Override
+    public void onGetAllTransactionIncome(@Nullable List<TransactionModel> t) {
+        if (t != null) transactions.addAll(t);
+        listReportAdapter.notifyDataSetChanged();
     }
 
     @Override

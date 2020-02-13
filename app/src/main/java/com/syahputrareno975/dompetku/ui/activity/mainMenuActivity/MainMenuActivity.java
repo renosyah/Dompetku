@@ -22,6 +22,7 @@ import com.syahputrareno975.dompetku.di.module.ActivityModule;
 import com.syahputrareno975.dompetku.model.menu.MenuModel;
 import com.syahputrareno975.dompetku.ui.activity.expenseActivity.ExpenseActivity;
 import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivity;
+import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivity;
 import com.syahputrareno975.dompetku.ui.adapter.menuAdapter.MenuAdapter;
 
 import java.text.DecimalFormat;
@@ -78,7 +79,7 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         });
 
         menu = findViewById(R.id.list_menu_recycleview);
-        menu.setAdapter(new MenuAdapter(context, new MenuAdapter.OnMainMenuAdapterItemClickListener() {
+        menu.setAdapter(new MenuAdapter(context,MenuAdapter.MAIN_MENU_LIST, new MenuAdapter.OnMainMenuAdapterItemClickListener() {
             @Override
             public void onItemClick(@NonNull MenuModel m, int pos) {
                 switch (m.Id){
@@ -92,6 +93,9 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
 
                         break;
                     case MenuModel.ID_REPORT:
+
+                        startActivity(new Intent(context, ReportMenuActivity.class));
+
                         break;
                         default:
                             break;

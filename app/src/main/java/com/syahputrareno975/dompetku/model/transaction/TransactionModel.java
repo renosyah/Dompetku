@@ -3,6 +3,7 @@ package com.syahputrareno975.dompetku.model.transaction;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.syahputrareno975.dompetku.model.BaseModel;
@@ -34,6 +35,13 @@ public class TransactionModel extends BaseModel {
 
     @ColumnInfo(name = "flow")
     private int Flow;
+
+    @Ignore
+    public boolean isHeader = false;
+
+    public TransactionModel(boolean isHeader) {
+        this.isHeader = isHeader;
+    }
 
     public TransactionModel() {
         super();

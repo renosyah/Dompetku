@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/header_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/textColorGray"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/date_report" />
+
+        <TextView
+            android:textColor="@color/textColorGray"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/des_report" />
+
+        <TextView
+            android:textColor="@color/textColorGray"
+            android:layout_margin="5dp"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:text="@string/amount_report" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/body_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="60dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/date_report_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="left"
+            android:text="16 Des 2019"
+            android:textColor="@color/textColorBlue"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/des_report_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Gajian"
+            android:textColor="@color/textColorBlack"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/amount_report_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingEnd="15dp"
+            android:text="+ Rp 5.000"
+            android:textColor="@color/textColorGreen"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/textColorGray"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_margin="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/report_is_empty" />
+    </LinearLayout>
+
+</LinearLayout>

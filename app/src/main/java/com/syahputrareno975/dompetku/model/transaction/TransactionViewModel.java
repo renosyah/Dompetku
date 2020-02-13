@@ -18,8 +18,16 @@ public class TransactionViewModel extends AndroidViewModel {
         repository = new TransactionRepository(application);
     }
 
-    public LiveData<List<TransactionModel>> all(String by,boolean isAsc,int offset, int limit){
-        return repository.all(by, isAsc, offset, limit);
+    public LiveData<List<TransactionModel>> all(int offset, int limit){
+        return repository.all(offset, limit);
+    }
+
+    public LiveData<List<TransactionModel>> all(Date start, Date end){
+        return repository.all(start, end);
+    }
+
+    public LiveData<List<TransactionModel>> allIncome(int offset, int limit){
+        return repository.allIncome(offset, limit);
     }
 
     public LiveData<Double> total(Date start, Date end){
@@ -28,6 +36,10 @@ public class TransactionViewModel extends AndroidViewModel {
 
     public LiveData<Double> total(){
         return repository.total();
+    }
+
+    public LiveData<IncomeAndExpenseModel> getIncomeExpense() {
+        return repository.getIncomeExpense();
     }
 
     public void add(TransactionModel c){

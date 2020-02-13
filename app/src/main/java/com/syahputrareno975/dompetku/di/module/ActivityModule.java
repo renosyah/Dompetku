@@ -8,6 +8,10 @@ import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivityCo
 import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivityPresenter;
 import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivityContract;
 import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivityPresenter;
+import com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity.ReportDiagramActivityContract;
+import com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity.ReportDiagramActivityPresenter;
+import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivityContract;
+import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -40,5 +44,15 @@ public class ActivityModule {
     @Provides
     public ExpenseActivityContract.Presenter provideExpenseActivityPresenter() {
         return new ExpenseActivityPresenter();
+    }
+
+    @Provides
+    public ReportMenuActivityContract.Presenter provideReportMenuActivityPresenter() {
+        return new ReportMenuActivityPresenter();
+    }
+
+    @Provides
+    public ReportDiagramActivityContract.Presenter provideReportDiagramActivityPresenter() {
+        return new ReportDiagramActivityPresenter();
     }
 }

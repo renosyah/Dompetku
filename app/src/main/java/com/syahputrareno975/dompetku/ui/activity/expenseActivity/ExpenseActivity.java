@@ -72,7 +72,7 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
 
         date = findViewById(R.id.date_expense_textview);
         Calendar cal = Calendar.getInstance();
-        expense.setDate(new Date(cal.getTimeInMillis()));
+        expense.setDate(new Date(cal.getTime().getTime()));
         date.setText(expense.getDate().toString());
 
         des = findViewById(R.id.des_expense_textview);
@@ -107,7 +107,7 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
                                 cal.set(Calendar.YEAR, year);
                                 cal.set(Calendar.MONTH, monthOfYear);
                                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                                expense.setDate(new Date(cal.getTimeInMillis()));
+                                expense.setDate(new Date(cal.getTime().getTime()));
                                 date.setText(expense.getDate().toString());
                             }
                         },

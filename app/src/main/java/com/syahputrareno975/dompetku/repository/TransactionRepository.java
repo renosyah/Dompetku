@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.syahputrareno975.dompetku.db.AppDatabase;
 import com.syahputrareno975.dompetku.interfaces.TransactionDao;
+import com.syahputrareno975.dompetku.model.transaction.IncomeAndExpenseModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 
 import java.sql.Date;
@@ -20,8 +21,16 @@ public class TransactionRepository {
         transactionDao = AppDatabase.getDatabase(application).transactionDao();
     }
 
-    public LiveData<List<TransactionModel>> all(String by,boolean isAsc,int offset, int limit) {
-        return transactionDao.all(by, isAsc, offset, limit);
+    public LiveData<List<TransactionModel>> all(int offset, int limit) {
+        return transactionDao.all(offset, limit);
+    }
+
+    public LiveData<List<TransactionModel>> all(Date start, Date end) {
+        return transactionDao.all(start, end);
+    }
+
+    public LiveData<List<TransactionModel>> allIncome(int offset, int limit) {
+        return transactionDao.allIncome(offset, limit);
     }
 
     public LiveData<Double> total(Date start, Date end) {
@@ -30,6 +39,10 @@ public class TransactionRepository {
 
     public LiveData<Double> total() {
         return transactionDao.total();
+    }
+
+    public LiveData<IncomeAndExpenseModel> getIncomeExpense() {
+        return transactionDao.getIncomeExpense();
     }
 
     public void add(final TransactionModel c) {
