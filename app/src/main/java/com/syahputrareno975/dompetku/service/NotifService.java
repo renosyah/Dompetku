@@ -99,6 +99,8 @@ public class NotifService extends LifecycleService {
                     // reset date notif
                     dateNotif = new Date(intent.getLongExtra("date",0));
 
+                    savedDate(context,dateNotif);
+
                     Log.e("call", "date change");
                 }
 
@@ -129,8 +131,6 @@ public class NotifService extends LifecycleService {
             e.printStackTrace();
         }
 
-        savedDate(context,dateNotif);
-
         // broadcast request to restart service
         Intent i = new Intent(ACTION_RESTART_SERVICE);
         i.setClass(getBaseContext(),AppReceiver.class);
@@ -148,8 +148,9 @@ public class NotifService extends LifecycleService {
             e.printStackTrace();
         }
 
-        savedDate(context,dateNotif);
     }
+
+
 
     private Serializable loadLastSavedDate(Context c){
         return new SerializableSave(c,"date_setting.set").load();

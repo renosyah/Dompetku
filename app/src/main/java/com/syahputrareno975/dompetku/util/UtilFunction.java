@@ -168,6 +168,6 @@ public class UtilFunction {
     }
 
     public static boolean isSameTime(Calendar a,Calendar b){
-        return a.get(Calendar.HOUR_OF_DAY) == b.get(Calendar.HOUR_OF_DAY) && a.get(Calendar.HOUR_OF_DAY) == b.get(Calendar.HOUR_OF_DAY);
+        return a.get(Calendar.HOUR_OF_DAY) == b.get(Calendar.HOUR_OF_DAY) && a.get(Calendar.MINUTE) == b.get(Calendar.MINUTE);
     }
 }

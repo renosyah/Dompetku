@@ -127,7 +127,7 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
     @Override
     public void onGetTransactionExpired(@Nullable TransactionModel t) {
         if (t != null){
-            sendNotification(context,R.drawable.icon,context.getString(R.string.expire_transaction_message));
+            // tell user, there is transaction expired
         }
     }
 
