@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import com.syahputrareno975.dompetku.repository.TransactionRepository;
+import com.syahputrareno975.dompetku.util.UtilFunction;
 
 import java.sql.Date;
 import java.util.List;
@@ -16,6 +17,11 @@ public class TransactionViewModel extends AndroidViewModel {
     public TransactionViewModel(@NonNull Application application) {
         super(application);
         repository = new TransactionRepository(application);
+    }
+
+    public TransactionViewModel(TransactionRepository repository) {
+        super(repository.getApplication());
+        this.repository = repository;
     }
 
     public LiveData<List<TransactionModel>> all(int offset, int limit){
@@ -40,6 +46,10 @@ public class TransactionViewModel extends AndroidViewModel {
 
     public LiveData<IncomeAndExpenseModel> getIncomeExpense() {
         return repository.getIncomeExpense();
+    }
+
+    public void oneExpiredTransaction(Date old, UtilFunction.Unit<TransactionModel> t){
+        repository.oneExpiredTransaction(old,t);
     }
 
     public void add(TransactionModel c){

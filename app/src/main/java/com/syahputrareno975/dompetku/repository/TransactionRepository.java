@@ -6,19 +6,27 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.syahputrareno975.dompetku.db.AppDatabase;
-import com.syahputrareno975.dompetku.interfaces.TransactionDao;
+import com.syahputrareno975.dompetku.dao.TransactionDao;
 import com.syahputrareno975.dompetku.model.transaction.IncomeAndExpenseModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
+import com.syahputrareno975.dompetku.util.UtilFunction;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
 
 public class TransactionRepository {
 
+    private Application application;
     private TransactionDao transactionDao;
 
     public TransactionRepository(@NonNull Application application) {
         transactionDao = AppDatabase.getDatabase(application).transactionDao();
+        this.application = application;
+    }
+
+    public Application getApplication() {
+        return application;
     }
 
     public LiveData<List<TransactionModel>> all(int offset, int limit) {
@@ -43,6 +51,15 @@ public class TransactionRepository {
 
     public LiveData<IncomeAndExpenseModel> getIncomeExpense() {
         return transactionDao.getIncomeExpense();
+    }
+
+    public void oneExpiredTransaction(Date old, UtilFunction.Unit<TransactionModel> t){
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                t.invoke(transactionDao.oneExpiredTransaction(old));
+            }
+        });
     }
 
     public void add(final TransactionModel c) {

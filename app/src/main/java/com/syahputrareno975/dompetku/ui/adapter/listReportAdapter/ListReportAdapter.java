@@ -14,9 +14,8 @@ import com.syahputrareno975.dompetku.R;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 
 import java.util.ArrayList;
-
 import static com.syahputrareno975.dompetku.util.Flow.FLOW_INCOME;
-import static com.syahputrareno975.dompetku.util.Formatter.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.formatter;
 
 public class ListReportAdapter extends RecyclerView.Adapter<ListReportAdapter.Holder> {
 

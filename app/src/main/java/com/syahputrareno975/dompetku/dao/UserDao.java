@@ -1,4 +1,4 @@
-package com.syahputrareno975.dompetku.interfaces;
+package com.syahputrareno975.dompetku.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.*;

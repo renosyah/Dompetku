@@ -12,6 +12,8 @@ import com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity.ReportDia
 import com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity.ReportDiagramActivityPresenter;
 import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivityContract;
 import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivityPresenter;
+import com.syahputrareno975.dompetku.ui.activity.settingActivity.SettingActivityContract;
+import com.syahputrareno975.dompetku.ui.activity.settingActivity.SettingActivityPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -54,5 +56,10 @@ public class ActivityModule {
     @Provides
     public ReportDiagramActivityContract.Presenter provideReportDiagramActivityPresenter() {
         return new ReportDiagramActivityPresenter();
+    }
+
+    @Provides
+    public SettingActivityContract.Presenter provideSettingActivityPresenter() {
+        return new SettingActivityPresenter();
     }
 }

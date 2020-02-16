@@ -1,4 +1,4 @@
-package com.syahputrareno975.dompetku.interfaces;
+package com.syahputrareno975.dompetku.dao;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -36,6 +36,9 @@ public interface TransactionDao {
 
     @Query("SELECT (SELECT SUM(amount) FROM transaction_data WHERE flow = " +  FLOW_INCOME + " ORDER BY date ASC) AS total_income,(SELECT SUM(amount) FROM transaction_data WHERE flow = " + FLOW_EXPENSE + " ORDER BY date ASC) AS total_expense")
     public LiveData<IncomeAndExpenseModel> getIncomeExpense();
+
+    @Query("SELECT * FROM transaction_data WHERE date <= :old LIMIT 1")
+    public TransactionModel oneExpiredTransaction(Date old);
 
     @Insert
     public void add(TransactionModel transactionModel);

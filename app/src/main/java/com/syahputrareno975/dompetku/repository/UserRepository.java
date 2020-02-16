@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.syahputrareno975.dompetku.db.AppDatabase;
-import com.syahputrareno975.dompetku.interfaces.UserDao;
+import com.syahputrareno975.dompetku.dao.UserDao;
 import com.syahputrareno975.dompetku.model.user.UserModel;
 
 public class UserRepository {

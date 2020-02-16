@@ -3,6 +3,7 @@
     package="com.syahputrareno975.dompetku">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -11,17 +12,23 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.reportDiagramActivity.ReportDiagramActivity"></activity>
+        <receiver
+            android:name=".service.AppReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
+
+        <activity android:name=".ui.activity.settingActivity.SettingActivity" />
+        <activity android:name=".ui.activity.reportDiagramActivity.ReportDiagramActivity" />
         <activity android:name=".ui.activity.reportMenuActivity.ReportMenuActivity" />
         <activity android:name=".ui.activity.expenseActivity.ExpenseActivity" />
         <activity android:name=".ui.activity.incomeActivity.IncomeActivity" />
 
         <service
             android:name=".service.NotifService"
+            android:process=":notif_process"
             android:enabled="true"
-            android:exported="true"
-            android:process=":externalProcess"
-            android:stopWithTask="false" />
+            android:exported="true" />
 
         <activity android:name=".ui.activity.splash.SplashActivity">
             <intent-filter>

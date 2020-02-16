@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">Dompetku</string>
+    <string name="app_name">KeuanganKu</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_report">Report</string>
     <string name="menu_home">Home</string>
     <string name="press_to_exit">Press once again to exit</string>
     <string name="menu_setting">Setting</string>
-    <string name="title">Dompetku</string>
+    <string name="title">KeuanganKu</string>
     <string name="add_income">Add Income</string>
     <string name="add_expense">Add Expense</string>
     <string name="balance_title">Balance</string>
@@ -48,11 +48,24 @@
     <string name="waterfall_diagram_report_title_menu">Waterfall Diagram</string>
     <string name="pie_chart_report_string"><![CDATA[Pie Chart Income & Expense]]></string>
     <string name="flow_piechart_legend_title">Type Transaction</string>
-    <string name="textColorGreen">#4CAF50</string>
-    <string name="textColorRed">#F44336</string>
-    <string name="textColorGray">#616161</string>
+    <string name="textColorGreen" translatable="false">#4CAF50</string>
+    <string name="textColorRed" translatable="false">#F44336</string>
+    <string name="textColorGray" translatable="false">#616161</string>
     <string name="waterfall_chart_report_string"><![CDATA[WaterFall Chart Income & Expense]]></string>
     <string name="scale_million">Mil</string>
     <string name="money_in_currency">Total Money</string>
     <string name="line_chart_report"><![CDATA[Line Chart Income & Expense]]></string>
+    <string name="delete_transaction_title">Delete Transaction</string>
+    <string name="delete">Delete</string>
+    <string name="delete_message">Are you sure want to delete this transaction</string>
+    <string name="transaction_is_deleted">Transaction is succesfully deleted</string>
+    <string name="expire_transaction_message">Expired Transaction Is Detected, Please delete if not use anymore</string>
+    <string name="min_ballance_message">Your Balance is Minus</string>
+    <string name="welcome_to_app">Welcome to KeuanganKu App</string>
+    <string name="new_schedule_received">Time Schedule For notification is received</string>
+    <string name="notification_setting">Notification Setting</string>
+    <string name="about_app">About App</string>
+    <string name="setting_title">Setting</string>
+    <string name="about_title">About App</string>
+    <string name="abount_message">lorem ipsum blablabla</string>
 </resources>

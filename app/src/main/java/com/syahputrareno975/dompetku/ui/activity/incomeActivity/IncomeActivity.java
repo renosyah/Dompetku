@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.anychart.core.polar.series.Line;
 import com.syahputrareno975.dompetku.BuildConfig;
 import com.syahputrareno975.dompetku.R;
 import com.syahputrareno975.dompetku.di.component.ActivityComponent;
@@ -25,6 +24,7 @@ import com.syahputrareno975.dompetku.di.component.DaggerActivityComponent;
 import com.syahputrareno975.dompetku.di.module.ActivityModule;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.ui.adapter.listReportAdapter.ListReportAdapter;
+import com.syahputrareno975.dompetku.ui.dialog.DialogDeleteTransaction;
 import com.syahputrareno975.dompetku.ui.dialog.DialogSimpleEditText;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.sql.Date;
@@ -36,7 +36,7 @@ import javax.inject.Inject;
 
 import static com.syahputrareno975.dompetku.util.ExpenseCategory.CATEGORY_NON_EXPENSE;
 import static com.syahputrareno975.dompetku.util.Flow.FLOW_INCOME;
-import static com.syahputrareno975.dompetku.util.Formatter.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.formatter;
 
 public class IncomeActivity extends AppCompatActivity implements IncomeActivityContract.View {
 
@@ -191,7 +191,19 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
         listReportAdapter = new ListReportAdapter(context, transactions, new ListReportAdapter.OnListReportAdapterListener() {
             @Override
             public void onClick(@NonNull TransactionModel t, int pos) {
-                // dialog delete transaction
+
+                // show dialog delete transaction
+                new DialogDeleteTransaction(context,context.getString(R.string.delete_message) + " " + t.getDate() + " " + t.getDescription() +  " ?", new DialogDeleteTransaction.OnDialogDeleteTransactionListener() {
+                    @Override
+                    public void onDelete() {
+                        presenter.deleteTransaction(t);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                }).show();
 
             }
         });
@@ -221,6 +233,18 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
     @Override
     public void onAddIncome() {
         finish();
+    }
+
+    @Override
+    public void onDeleteTransaction() {
+        Toast.makeText(context,context.getString(R.string.transaction_is_deleted),Toast.LENGTH_SHORT).show();
+        offset = 0;
+        limit = 15;
+        transactions.clear();
+
+        // for header
+        transactions.add(new TransactionModel(true));
+        listReportAdapter.notifyDataSetChanged();
     }
 
     @Override

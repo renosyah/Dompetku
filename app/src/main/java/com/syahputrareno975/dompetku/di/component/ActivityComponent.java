@@ -6,6 +6,7 @@ import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivity;
 import com.syahputrareno975.dompetku.ui.activity.mainMenuActivity.MainMenuActivity;
 import com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity.ReportDiagramActivity;
 import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivity;
+import com.syahputrareno975.dompetku.ui.activity.settingActivity.SettingActivity;
 
 import dagger.Component;
 
@@ -18,4 +19,5 @@ public interface ActivityComponent {
     public void inject(ExpenseActivity expenseActivity);
     public void inject(ReportMenuActivity reportMenuActivity);
     public void inject(ReportDiagramActivity reportDiagramActivity);
+    public void inject(SettingActivity settingActivity);
 }

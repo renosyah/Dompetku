@@ -18,6 +18,7 @@ public class ReportDiagramActivityContract {
         public void onGetIncomeExpense(@Nullable IncomeAndExpenseModel i);
         public void onGetAllTransactionForWaterfall(@Nullable List<TransactionModel> t);
         public void onGetAllTransactionForLine(@Nullable List<TransactionModel> t);
+        public void onDeleteTransaction();
     }
 
     public interface Presenter extends BaseContract.Presenter<View> {
@@ -26,5 +27,6 @@ public class ReportDiagramActivityContract {
         public void getAllTransactionForLine(Date start, Date end);
         public void getBallance();
         public void getIncomeExpense();
+        public void deleteTransaction(TransactionModel t);
     }
 }

@@ -1,13 +1,5 @@
 package com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +7,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
@@ -41,8 +41,8 @@ import com.syahputrareno975.dompetku.model.menu.MenuModel;
 import com.syahputrareno975.dompetku.model.transaction.IncomeAndExpenseModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.ui.adapter.listReportAdapter.ListReportAdapter;
-import com.syahputrareno975.dompetku.util.CustomDataEntry;
-import com.syahputrareno975.dompetku.util.GetMonthName;
+import com.syahputrareno975.dompetku.ui.dialog.DialogDeleteTransaction;
+import com.syahputrareno975.dompetku.util.UtilFunction;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -53,15 +53,15 @@ import javax.inject.Inject;
 
 import static com.syahputrareno975.dompetku.util.Flow.FLOW_EXPENSE;
 import static com.syahputrareno975.dompetku.util.Flow.FLOW_INCOME;
-import static com.syahputrareno975.dompetku.util.Formatter.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.getMonthForInt;
 
 public class ReportDiagramActivity extends AppCompatActivity implements ReportDiagramActivityContract.View {
 
-    private static final int FLAG_MINUTE_REPORT = 0;
-    private static final int FLAG_HOUR_REPORT = 1;
-    private static final int FLAG_DAILY_REPORT = 2;
-    private static final int FLAG_WEEKLY_REPORT = 3;
-    private static final int FLAG_MONTLY_REPORT = 4;
+    private static final int FLAG_DAILY_REPORT = 0;
+    private static final int FLAG_WEEKLY_REPORT = 1;
+    private static final int FLAG_MONTLY_REPORT = 2;
+    private static final int FLAG_NO_INTERVAL = 3;
 
     @Inject
     public ReportDiagramActivityContract.Presenter presenter;
@@ -85,7 +85,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
     private int offset = 0,limit = 15;
 
     private LinearLayout chartReportLayout;
-    private int flagReportType = FLAG_DAILY_REPORT;
+    private int flagReportType = BuildConfig.DEFAULT_INTERVAL_REPORT;
 
 
     @Override
@@ -120,6 +120,13 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         ammountBallance.setText(BuildConfig.CURRENCY  + " "+formatter.format(0));
 
         chartReport = findViewById(R.id.chart_report);
+        chartReport.setOnRenderedListener(new AnyChartView.OnRenderedListener() {
+            @Override
+            public void onRendered() {
+                // on chart is completed rendered
+
+            }
+        });
 
         // for header
         transactions.add(new TransactionModel(true));
@@ -173,6 +180,18 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
             @Override
             public void onClick(@NonNull TransactionModel t, int pos) {
 
+                // show dialog delete transaction
+                new DialogDeleteTransaction(context,context.getString(R.string.delete_message) + " "  + t.getDate() + " " + t.getDescription() +  " ?", new DialogDeleteTransaction.OnDialogDeleteTransactionListener() {
+                    @Override
+                    public void onDelete() {
+                        presenter.deleteTransaction(t);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+                }).show();
             }
         });
         listReport.setAdapter(listReportAdapter);
@@ -221,6 +240,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
                 .align(Align.CENTER);
 
         chartReport.setChart(pie);
+
     }
 
     private void setWaterfall(int typeReport,List<TransactionModel> t){
@@ -246,6 +266,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
                         "    }");
 
 
+        int num = 1;
         List<DataEntry> data = new ArrayList<>();
         for (TransactionModel i : t){
             Calendar cal = Calendar.getInstance();
@@ -253,26 +274,10 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
             switch (typeReport){
 
-                case FLAG_MINUTE_REPORT:
-
-                    data.add(new ValueDataEntry(
-                            cal.get(Calendar.MINUTE),
-                            i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
-                case FLAG_HOUR_REPORT:
-
-                    data.add(new ValueDataEntry(
-                            cal.get(Calendar.HOUR_OF_DAY),
-                            i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
                 case FLAG_DAILY_REPORT:
 
                     data.add(new ValueDataEntry(
-                            cal.get(Calendar.DATE),
+                            cal.get(Calendar.DATE) + ", " + getMonthForInt(cal.get(Calendar.MONTH)),
                             i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
 
                     break;
@@ -280,7 +285,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
                 case FLAG_WEEKLY_REPORT:
 
                     data.add(new ValueDataEntry(
-                            cal.get(Calendar.WEEK_OF_MONTH),
+                            getMonthForInt(cal.get(Calendar.MONTH)) + ": " + cal.get(Calendar.WEEK_OF_MONTH),
                             i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
 
                     break;
@@ -288,12 +293,22 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
                 case FLAG_MONTLY_REPORT:
 
                     data.add(new ValueDataEntry(
-                            GetMonthName.getMonthForInt(cal.get(Calendar.MONTH)),
+                            getMonthForInt(cal.get(Calendar.MONTH)),
                             i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
 
                     break;
+
+                case FLAG_NO_INTERVAL:
+                    data.add(new ValueDataEntry(
+                        num + "",
+                        i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
+
+                    break;
+
                     default: break;
             }
+
+            num++;
 
         }
         DataEntry end = new DataEntry();
@@ -354,9 +369,10 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
 
         List<DataEntry> seriesData = new ArrayList<>();
-        seriesData.add(new CustomDataEntry("Start",
+        seriesData.add(new UtilFunction.CustomDataEntry("Start",
                 0, 0));
 
+        int num = 1;
         for (TransactionModel i : t){
             Calendar cal = Calendar.getInstance();
             cal.setTime(i.getDate());
@@ -366,33 +382,32 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
             switch (typeReport){
 
-                case FLAG_MINUTE_REPORT:
-                    seriesData.add(new CustomDataEntry(cal.get(Calendar.MINUTE)+"",
-                            totalIncome, totalExpense));
-                    break;
+                 case FLAG_DAILY_REPORT:
 
-                case FLAG_HOUR_REPORT:
-                    seriesData.add(new CustomDataEntry(cal.get(Calendar.HOUR_OF_DAY)+"",
-                            totalIncome, totalExpense));
-                    break;
-
-                case FLAG_DAILY_REPORT:
-
-                    seriesData.add(new CustomDataEntry(cal.get(Calendar.DATE)+"",
+                    seriesData.add(new UtilFunction.CustomDataEntry(
+                            cal.get(Calendar.DATE) + ", " + getMonthForInt(cal.get(Calendar.MONTH)),
                             totalIncome, totalExpense));
                     break;
 
                 case FLAG_WEEKLY_REPORT:
-                    seriesData.add(new CustomDataEntry(cal.get(Calendar.WEEK_OF_MONTH)+"",
+                    seriesData.add(new UtilFunction.CustomDataEntry(
+                            getMonthForInt(cal.get(Calendar.MONTH)) + ": " + cal.get(Calendar.WEEK_OF_MONTH),
                             totalIncome, totalExpense));
                     break;
 
                 case FLAG_MONTLY_REPORT:
-                    seriesData.add(new CustomDataEntry(GetMonthName.getMonthForInt(cal.get(Calendar.MONTH)),
+                    seriesData.add(new UtilFunction.CustomDataEntry(getMonthForInt(cal.get(Calendar.MONTH)),
                             totalIncome, totalExpense));
                     break;
+
+                case FLAG_NO_INTERVAL:
+                    seriesData.add(new UtilFunction.CustomDataEntry(num + "",
+                            totalIncome, totalExpense));
+                    break;
+
                 default: break;
             }
+            num++;
 
         }
 
@@ -443,6 +458,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
     @Override
     public void onGetBallance(@Nullable Double amount) {
+        ammountBallance.setText(BuildConfig.CURRENCY  + " " + formatter.format(0));
         if (amount != null) ammountBallance.setText(BuildConfig.CURRENCY  + " " + formatter.format(amount));
     }
 
@@ -459,6 +475,18 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
     @Override
     public void onGetAllTransactionForLine(@Nullable List<TransactionModel> t) {
         if (t != null) setLineGraph(flagReportType, t);
+    }
+
+    @Override
+    public void onDeleteTransaction() {
+        Toast.makeText(context,context.getString(R.string.transaction_is_deleted),Toast.LENGTH_SHORT).show();
+        offset = 0;
+        limit = 15;
+        transactions.clear();
+
+        // for header
+        transactions.add(new TransactionModel(true));
+        listReportAdapter.notifyDataSetChanged();
     }
 
     @Override

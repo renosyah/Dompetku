@@ -13,6 +13,7 @@ public class IncomeActivityContract {
         public void showProgress(Boolean show);
         public void showError(String error);
         void onAddIncome();
+        void onDeleteTransaction();
         void onGetAllTransactionIncome(@Nullable List<TransactionModel> t);
 
     }
@@ -20,5 +21,6 @@ public class IncomeActivityContract {
     public interface Presenter extends BaseContract.Presenter<View> {
         void addIncome(@NonNull TransactionModel t);
         void getAllTransactionIncome(int offset,int limit);
+        void deleteTransaction(TransactionModel t);
     }
 }

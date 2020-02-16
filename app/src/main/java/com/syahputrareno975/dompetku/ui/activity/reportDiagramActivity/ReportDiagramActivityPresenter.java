@@ -3,13 +3,11 @@ package com.syahputrareno975.dompetku.ui.activity.reportDiagramActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.syahputrareno975.dompetku.model.transaction.IncomeAndExpenseModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionViewModel;
-import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivityContract;
 
 import java.sql.Date;
 import java.util.List;
@@ -38,35 +36,35 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
 
     @Override
     public void getAllTransaction(int offset, int limit) {
-        transactionViewModel.all(offset, limit).observe((LifecycleOwner) view, new Observer<List<TransactionModel>>() {
+        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
-                transactionViewModel.all(offset, limit).removeObservers((LifecycleOwner) view);
                 view.onGetAllTransaction(transactionModels);
             }
-        });
+        };
+        transactionViewModel.all(offset, limit).observe((LifecycleOwner) view,observer);
     }
 
     @Override
     public void getAllTransactionForWaterfall(Date start, Date end) {
-        transactionViewModel.all(start, end).observe((LifecycleOwner) view, new Observer<List<TransactionModel>>() {
+        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
-                transactionViewModel.all(start, end).removeObservers((LifecycleOwner) view);
                 view.onGetAllTransactionForWaterfall(transactionModels);
             }
-        });
+        };
+        transactionViewModel.all(start, end).observe((LifecycleOwner) view, observer);
     }
 
     @Override
     public void getAllTransactionForLine(Date start, Date end) {
-        transactionViewModel.all(start, end).observe((LifecycleOwner) view, new Observer<List<TransactionModel>>() {
+        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
-                transactionViewModel.all(start, end).removeObservers((LifecycleOwner) view);
                 view.onGetAllTransactionForLine(transactionModels);
             }
-        });
+        };
+        transactionViewModel.all(start, end).observe((LifecycleOwner) view, observer);
     }
 
     @Override
@@ -81,12 +79,18 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
 
     @Override
     public void getIncomeExpense() {
-        transactionViewModel.getIncomeExpense().observe((LifecycleOwner) view, new Observer<IncomeAndExpenseModel>() {
+        Observer<IncomeAndExpenseModel> observer = new Observer<IncomeAndExpenseModel>() {
             @Override
             public void onChanged(IncomeAndExpenseModel incomeAndExpenseModel) {
-                transactionViewModel.getIncomeExpense().removeObservers((LifecycleOwner) view);
                 view.onGetIncomeExpense(incomeAndExpenseModel);
             }
-        });
+        };
+        transactionViewModel.getIncomeExpense().observe((LifecycleOwner) view,observer );
+    }
+
+    @Override
+    public void deleteTransaction(TransactionModel t) {
+        transactionViewModel.delete(t);
+        view.onDeleteTransaction();
     }
 }

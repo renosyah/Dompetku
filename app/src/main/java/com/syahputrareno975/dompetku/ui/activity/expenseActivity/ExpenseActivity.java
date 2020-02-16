@@ -31,8 +31,7 @@ import javax.inject.Inject;
 import static com.syahputrareno975.dompetku.util.ExpenseCategory.CATEGORY_NON_EXPENSE;
 import static com.syahputrareno975.dompetku.util.ExpenseCategory.getCategory;
 import static com.syahputrareno975.dompetku.util.Flow.FLOW_EXPENSE;
-import static com.syahputrareno975.dompetku.util.Flow.FLOW_INCOME;
-import static com.syahputrareno975.dompetku.util.Formatter.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.formatter;
 
 public class ExpenseActivity extends AppCompatActivity implements ExpenseActivityContract.View {
 

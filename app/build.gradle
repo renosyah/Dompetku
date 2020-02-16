@@ -31,6 +31,7 @@ android {
         buildTypes.each {
             it.buildConfigField "String", "DB_NAME", "\"dompet_db\""
             it.buildConfigField "int", "MAX_ACCOUNT", "5"
+            it.buildConfigField "int", "DEFAULT_INTERVAL_REPORT", "3"
             it.buildConfigField "String", "CURRENCY", "\"Rp\""
             it.resValue "string", "currency", "Rp"
         }

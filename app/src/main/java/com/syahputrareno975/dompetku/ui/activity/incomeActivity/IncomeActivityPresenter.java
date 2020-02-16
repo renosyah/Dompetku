@@ -41,12 +41,18 @@ public class IncomeActivityPresenter implements IncomeActivityContract.Presenter
 
     @Override
     public void getAllTransactionIncome(int offset, int limit) {
-        this.transactionViewModel.allIncome(offset, limit).observe((LifecycleOwner) view, new Observer<List<TransactionModel>>() {
+        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
-                transactionViewModel.allIncome(offset, limit).removeObservers((LifecycleOwner) view);
                 view.onGetAllTransactionIncome(transactionModels);
             }
-        });
+        };
+        this.transactionViewModel.allIncome(offset, limit).observe((LifecycleOwner) view, observer);
+    }
+
+    @Override
+    public void deleteTransaction(TransactionModel t) {
+        this.transactionViewModel.delete(t);
+        this.view.onDeleteTransaction();
     }
 }

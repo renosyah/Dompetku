@@ -1,6 +1,7 @@
 package com.syahputrareno975.dompetku.ui.activity.mainMenuActivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,16 +21,20 @@ import com.syahputrareno975.dompetku.di.component.ActivityComponent;
 import com.syahputrareno975.dompetku.di.component.DaggerActivityComponent;
 import com.syahputrareno975.dompetku.di.module.ActivityModule;
 import com.syahputrareno975.dompetku.model.menu.MenuModel;
+import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.ui.activity.expenseActivity.ExpenseActivity;
 import com.syahputrareno975.dompetku.ui.activity.incomeActivity.IncomeActivity;
 import com.syahputrareno975.dompetku.ui.activity.reportMenuActivity.ReportMenuActivity;
+import com.syahputrareno975.dompetku.ui.activity.settingActivity.SettingActivity;
 import com.syahputrareno975.dompetku.ui.adapter.menuAdapter.MenuAdapter;
 
 import java.text.DecimalFormat;
 
 import javax.inject.Inject;
 
-import static com.syahputrareno975.dompetku.util.Formatter.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.formatter;
+import static com.syahputrareno975.dompetku.util.UtilFunction.getExpiredTransactionDate;
+import static com.syahputrareno975.dompetku.util.UtilFunction.sendNotification;
 
 public class MainMenuActivity extends AppCompatActivity implements MainMenuActivityContract.View {
 
@@ -63,6 +68,8 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // open setting
+                startActivity(new Intent(context, SettingActivity.class));
 
             }
         });
@@ -82,6 +89,7 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         menu.setAdapter(new MenuAdapter(context,MenuAdapter.MAIN_MENU_LIST, new MenuAdapter.OnMainMenuAdapterItemClickListener() {
             @Override
             public void onItemClick(@NonNull MenuModel m, int pos) {
+
                 switch (m.Id){
                     case MenuModel.ID_FOOD_EXPENSE:
                     case MenuModel.ID_TRANSPORT_EXPENSE:
@@ -105,12 +113,22 @@ public class MainMenuActivity extends AppCompatActivity implements MainMenuActiv
         menu.setLayoutManager(new GridLayoutManager(context,2));
 
         presenter.getBallance();
+        presenter.getTransactionExpired(getExpiredTransactionDate());
     }
 
 
     @Override
-    public void onGetBallance(Double total) {
-        if (total!=null) balance.setText(BuildConfig.CURRENCY  + " " + formatter.format(total));
+    public void onGetBallance(@Nullable Double total) {
+        if (total != null && total < 0) sendNotification(context,R.drawable.warn,context.getString(R.string.min_ballance_message));
+        if (total != null) balance.setText(BuildConfig.CURRENCY  + " " + formatter.format(total));
+        else balance.setText(BuildConfig.CURRENCY  + " 0");
+    }
+
+    @Override
+    public void onGetTransactionExpired(@Nullable TransactionModel t) {
+        if (t != null){
+            sendNotification(context,R.drawable.icon,context.getString(R.string.expire_transaction_message));
+        }
     }
 
     @Override
