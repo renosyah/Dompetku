@@ -157,19 +157,11 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
         } else if (m.Id == MenuModel.ID_REPORT_WATERFALL_DIAGRAM){
 
-            Calendar start = Calendar.getInstance();
-            start.set(1990,1,1);
-            Calendar now  = Calendar.getInstance();
-
-            presenter.getAllTransactionForWaterfall(new Date(start.getTime().getTime()),new Date(now.getTime().getTime()));
+            presenter.getAllTransactionForWaterfall();
 
         } else if (m.Id == MenuModel.ID_REPORT_LINE_DIAGRAM){
 
-            Calendar start = Calendar.getInstance();
-            start.set(1990,1,1);
-            Calendar now  = Calendar.getInstance();
-
-            presenter.getAllTransactionForLine(new Date(start.getTime().getTime()),new Date(now.getTime().getTime()));
+            presenter.getAllTransactionForLine();
         }
     }
 

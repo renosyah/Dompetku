@@ -19,6 +19,9 @@ import static com.syahputrareno975.dompetku.util.Flow.FLOW_INCOME;
 @Dao
 public interface TransactionDao {
 
+    @Query("SELECT * FROM transaction_data ORDER BY date ASC")
+    public LiveData<List<TransactionModel>> all();
+
     @Query("SELECT * FROM transaction_data ORDER BY date ASC LIMIT :limit OFFSET :offset")
     public LiveData<List<TransactionModel>> all(int offset, int limit);
 

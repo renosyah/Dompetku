@@ -24,6 +24,10 @@ public class TransactionViewModel extends AndroidViewModel {
         this.repository = repository;
     }
 
+    public LiveData<List<TransactionModel>> all(){
+        return repository.all();
+    }
+
     public LiveData<List<TransactionModel>> all(int offset, int limit){
         return repository.all(offset, limit);
     }

@@ -46,25 +46,25 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
     }
 
     @Override
-    public void getAllTransactionForWaterfall(Date start, Date end) {
+    public void getAllTransactionForWaterfall() {
         Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
                 view.onGetAllTransactionForWaterfall(transactionModels);
             }
         };
-        transactionViewModel.all(start, end).observe((LifecycleOwner) view, observer);
+        transactionViewModel.all().observe((LifecycleOwner) view, observer);
     }
 
     @Override
-    public void getAllTransactionForLine(Date start, Date end) {
+    public void getAllTransactionForLine() {
         Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
             @Override
             public void onChanged(List<TransactionModel> transactionModels) {
                 view.onGetAllTransactionForLine(transactionModels);
             }
         };
-        transactionViewModel.all(start, end).observe((LifecycleOwner) view, observer);
+        transactionViewModel.all().observe((LifecycleOwner) view, observer);
     }
 
     @Override

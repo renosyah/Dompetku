@@ -29,6 +29,10 @@ public class TransactionRepository {
         return application;
     }
 
+    public LiveData<List<TransactionModel>> all() {
+        return transactionDao.all();
+    }
+
     public LiveData<List<TransactionModel>> all(int offset, int limit) {
         return transactionDao.all(offset, limit);
     }

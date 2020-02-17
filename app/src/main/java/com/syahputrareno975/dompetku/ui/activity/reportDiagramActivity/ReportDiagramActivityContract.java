@@ -23,8 +23,8 @@ public class ReportDiagramActivityContract {
 
     public interface Presenter extends BaseContract.Presenter<View> {
         public void getAllTransaction(int offset, int limit);
-        public void getAllTransactionForWaterfall(Date start, Date end);
-        public void getAllTransactionForLine(Date start, Date end);
+        public void getAllTransactionForWaterfall();
+        public void getAllTransactionForLine();
         public void getBallance();
         public void getIncomeExpense();
         public void deleteTransaction(TransactionModel t);
