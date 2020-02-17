@@ -21,10 +21,12 @@ import com.syahputrareno975.dompetku.service.AppReceiver;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
 import static com.syahputrareno975.dompetku.service.NotifService.ACTION_CHANGE_TIME_SCHEDULE_FOR_NOTIFICATION;
+import static com.syahputrareno975.dompetku.service.NotifService.savedDate;
 
 public class SettingActivity extends AppCompatActivity implements SettingActivityContract.View {
 
@@ -77,6 +79,8 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
                         Intent i = new Intent(ACTION_CHANGE_TIME_SCHEDULE_FOR_NOTIFICATION);
                         i.putExtra("date",now.getTimeInMillis());
                         sendBroadcast(i);
+
+                        savedDate(context,new java.sql.Date(now.getTimeInMillis()));
 
                         Log.e("date send",now.getTime().toString());
 

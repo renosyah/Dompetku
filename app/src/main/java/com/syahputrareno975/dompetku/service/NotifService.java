@@ -1,5 +1,8 @@
 package com.syahputrareno975.dompetku.service;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +15,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleService;
 import androidx.lifecycle.Observer;
 
+import com.syahputrareno975.dompetku.BuildConfig;
 import com.syahputrareno975.dompetku.R;
 import com.syahputrareno975.dompetku.model.transaction.TransactionModel;
 import com.syahputrareno975.dompetku.model.transaction.TransactionViewModel;
@@ -24,9 +28,14 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Random;
 
 import static com.syahputrareno975.dompetku.service.AppReceiver.ACTION_RESTART_SERVICE;
+import static com.syahputrareno975.dompetku.util.UtilFunction.NOTIF_CHANNEL_DES;
+import static com.syahputrareno975.dompetku.util.UtilFunction.NOTIF_CHANNEL_ID;
+import static com.syahputrareno975.dompetku.util.UtilFunction.NOTIF_CHANNEL_NAME;
 import static com.syahputrareno975.dompetku.util.UtilFunction.getExpiredTransactionDate;
+import static com.syahputrareno975.dompetku.util.UtilFunction.importance;
 import static com.syahputrareno975.dompetku.util.UtilFunction.sendNotification;
 
 public class NotifService extends LifecycleService {
@@ -56,6 +65,10 @@ public class NotifService extends LifecycleService {
 
         context = this;
         lifecycleOwner = this;
+
+        if (BuildConfig.ENABLE_FOREGROUND) {
+            startForeground();
+        }
 
         if (loadLastSavedDate(context) != null){
             UtilFunction.LastDateCacheModel cache = (UtilFunction.LastDateCacheModel)loadLastSavedDate(context);
@@ -132,9 +145,9 @@ public class NotifService extends LifecycleService {
         }
 
         // broadcast request to restart service
-        Intent i = new Intent(ACTION_RESTART_SERVICE);
-        i.setClass(getBaseContext(),AppReceiver.class);
-        sendBroadcast(i);
+         Intent i = new Intent(ACTION_RESTART_SERVICE);
+         i.setClass(getBaseContext(),AppReceiver.class);
+         sendBroadcast(i);
 
     }
 
@@ -147,16 +160,40 @@ public class NotifService extends LifecycleService {
         } catch(IllegalArgumentException e) {
             e.printStackTrace();
         }
-
     }
 
 
-
-    private Serializable loadLastSavedDate(Context c){
+    public static Serializable loadLastSavedDate(Context c){
         return new SerializableSave(c,"date_setting.set").load();
     }
 
-    private void savedDate(Context c,Date d){
+    public static void savedDate(Context c,Date d){
         if (d != null) new SerializableSave(c,"date_setting.set").save(new UtilFunction.LastDateCacheModel(d.getTime()));
+    }
+
+    private final int ONGOING_NOTIFICATION_ID = new Random(System.currentTimeMillis()).nextInt(100);
+
+    private void startForeground() {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    NOTIF_CHANNEL_ID + "_FOREGROUND",
+                    NOTIF_CHANNEL_NAME + "_FOREGROUND" ,
+                    NotificationManager.IMPORTANCE_LOW);
+            channel.setDescription(NOTIF_CHANNEL_DES + "_FOREGROUND");
+            channel.setShowBadge(false);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+
+                Notification notification = new Notification.Builder(context, NOTIF_CHANNEL_ID + "_FOREGROUND")
+                        .setSmallIcon(R.drawable.icon)
+                        .setContentTitle(getText(R.string.app_name))
+                        .setContentText(getText(R.string.foreground_notification_message))
+                        .build();
+
+                startForeground(ONGOING_NOTIFICATION_ID, notification);
+            }
+        }
     }
 }

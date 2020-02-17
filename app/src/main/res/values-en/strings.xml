@@ -64,4 +64,6 @@
     <string name="about_app">About App</string>
     <string name="notification_setting">Notification Setting</string>
     <string name="setting_title">Setting</string>
+    <string name="about_title">About App</string>
+    <string name="foreground_notification_message">Keuanganku Service is running</string>
 </resources>

@@ -64,4 +64,6 @@
     <string name="about_app">Tentang Aplikasi</string>
     <string name="notification_setting">Pengaturan Notifikasi</string>
     <string name="setting_title">Pengaturan</string>
+    <string name="about_title">Tentang Aplikasi</string>
+    <string name="foreground_notification_message">Keuanganku Service Sedang berjalan</string>
 </resources>

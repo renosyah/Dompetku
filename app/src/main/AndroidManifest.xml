@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -13,9 +14,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver
-            android:name=".service.AppReceiver"
+            android:name="com.syahputrareno975.dompetku.service.AppReceiver"
             android:enabled="true"
             android:exported="true">
+
+            <intent-filter android:priority="20">
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.DATE_CHANGED"></action>
+                <action android:name="android.intent.action.TIME_SET"></action>
+                <action android:name="android.intent.action.TIMEZONE_CHANGED"></action>
+                <action android:name="action.restart.service"/>
+            </intent-filter>
+
         </receiver>
 
         <activity android:name=".ui.activity.settingActivity.SettingActivity" />

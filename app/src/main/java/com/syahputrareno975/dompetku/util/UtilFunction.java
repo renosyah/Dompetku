@@ -119,9 +119,9 @@ public class UtilFunction {
         }
     }
 
-    private static final String NOTIF_CHANNEL_ID = BuildConfig.APPLICATION_ID + "_NOTIFICATION_ID";
-    private static final String NOTIF_CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_NOTIFICATION_NAME";
-    private static final String NOTIF_CHANNEL_DES = BuildConfig.APPLICATION_ID + "_NOTIFICATION_DES";
+    public static final String NOTIF_CHANNEL_ID = BuildConfig.APPLICATION_ID + "_NOTIFICATION_ID";
+    public static final String NOTIF_CHANNEL_NAME = BuildConfig.APPLICATION_ID + "_NOTIFICATION_NAME";
+    public static final String NOTIF_CHANNEL_DES = BuildConfig.APPLICATION_ID + "_NOTIFICATION_DES";
     public static final int importance = NotificationManager.IMPORTANCE_HIGH;
 
     public static void sendNotification(Context c,int icon,String message) {

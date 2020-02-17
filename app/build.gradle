@@ -29,6 +29,7 @@ android {
 
         }
         buildTypes.each {
+            it.buildConfigField "boolean", "ENABLE_FOREGROUND", "true"
             it.buildConfigField "String", "DB_NAME", "\"dompet_db\""
             it.buildConfigField "int", "MAX_ACCOUNT", "5"
             it.buildConfigField "int", "DEFAULT_INTERVAL_REPORT", "3"

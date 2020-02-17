@@ -33,10 +33,11 @@ public class SplashActivity extends AppCompatActivity {
 
                 if (!isMyServiceRunning(context,NotifService.class)) {
 
-                    // new notif time is set
-                    Intent i = new Intent(ACTION_RESTART_SERVICE);
-                    i.setClass(getBaseContext(), AppReceiver.class);
-                    getBaseContext().sendBroadcast(i);
+                    // tell app receiver to restart
+                    // notif service
+                     Intent i = new Intent(ACTION_RESTART_SERVICE);
+                     i.setClass(getBaseContext(), AppReceiver.class);
+                     getBaseContext().sendBroadcast(i);
                 }
 
                 startActivity(new Intent(context, MainMenuActivity.class));
