@@ -7,7 +7,7 @@ dompetku is a simple accounting note app
 
 * Design Mockup
 
-![GitHub Logo](/design/app.png) 
+![GitHub Logo](/design/app_revision.png) 
 
 
 
