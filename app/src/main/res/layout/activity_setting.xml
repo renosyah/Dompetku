@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.syahputrareno975.dompetku.ui.activity.settingActivity.SettingActivity">
+    tools:context="com.wawan.dompetku.ui.activity.settingActivity.SettingActivity">
 
     <FrameLayout
         android:layout_width="match_parent"

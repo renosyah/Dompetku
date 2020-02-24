@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.syahputrareno975.dompetku">
+    package="com.wawan.dompetku">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <receiver
-            android:name="com.syahputrareno975.dompetku.service.AppReceiver"
+            android:name="com.wawan.dompetku.service.AppReceiver"
             android:enabled="true"
             android:exported="true">
 
@@ -28,26 +28,26 @@
 
         </receiver>
 
-        <activity android:name=".ui.activity.settingActivity.SettingActivity" />
-        <activity android:name=".ui.activity.reportDiagramActivity.ReportDiagramActivity" />
-        <activity android:name=".ui.activity.reportMenuActivity.ReportMenuActivity" />
-        <activity android:name=".ui.activity.expenseActivity.ExpenseActivity" />
-        <activity android:name=".ui.activity.incomeActivity.IncomeActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.settingActivity.SettingActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.reportDiagramActivity.ReportDiagramActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.reportMenuActivity.ReportMenuActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.expenseActivity.ExpenseActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.incomeActivity.IncomeActivity" />
 
         <service
-            android:name=".service.NotifService"
+            android:name="com.wawan.dompetku.service.NotifService"
             android:process=":notif_process"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".ui.activity.splash.SplashActivity">
+        <activity android:name="com.wawan.dompetku.ui.activity.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.mainMenuActivity.MainMenuActivity" />
+        <activity android:name="com.wawan.dompetku.ui.activity.mainMenuActivity.MainMenuActivity" />
     </application>
 
 </manifest>

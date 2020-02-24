@@ -67,6 +67,6 @@
     <string name="about_app">About App</string>
     <string name="setting_title">Setting</string>
     <string name="abount_message">lorem ipsum blablabla</string>
-    <string name="foreground_notification_message">Keuanganku Service is running</string>
+    <string name="foreground_notification_message">Service is running</string>
     <string name="about_title">About App</string>
 </resources>

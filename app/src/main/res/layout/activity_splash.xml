@@ -7,7 +7,7 @@
     android:background="@color/colorPrimaryLight"
     android:orientation="vertical"
     android:gravity="center"
-    tools:context="com.syahputrareno975.dompetku.ui.activity.splash.SplashActivity">
+    tools:context="com.wawan.dompetku.ui.activity.splash.SplashActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
