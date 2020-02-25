@@ -46,7 +46,7 @@ adalah activity yang akan ditampilkan saat aplikasi di buka,
 activity ini juga akan menjalankan service yang nantinya akan
 melakukan monitor untuk transaksi yang expired
 
-![GitHub Logo](/design/app_1.png) 
+![GitHub Logo](/design/app_1_small.png) 
 
 
 
@@ -61,7 +61,7 @@ dan di validasi id menunya, maka akan menjalankan aktivity yg dituju sesuai deng
 id menu, contoh saat user menklik menu pengeluaran, maka user akan diarakan ke form
 input pengeluaran
 
-![GitHub Logo](/design/app_2.png) 
+![GitHub Logo](/design/app_2_small.png) 
 
 
 
@@ -72,7 +72,7 @@ ini adalah activity yang digunakan untuk menginputkan transaksi pengeluaran
 pada saat user menginputkan data-data, maka data-data tersebut akan di insert
 ke tabel yang berada di database lokal yg menggunakan android ROOM
 
-![GitHub Logo](/design/app_3.png) 
+![GitHub Logo](/design/app_3_small.png) 
 
 
 
@@ -85,7 +85,7 @@ ke tabel yang berada di database lokal yg menggunakan android ROOM,
 berbeda dengan pengeluaran, activity ini juga akan menampilkan data-data pemasukkan
 yg berbentuk list laporan, yg berada tepat dibawah form
 
-![GitHub Logo](/design/app_4.png) 
+![GitHub Logo](/design/app_4_small.png) 
 
 
 
@@ -97,7 +97,7 @@ recycleview, sama seperti pada menu utama, pada saat salah satu item diclik
 maka akan divalidasi,lalu user akan diarahkan ke activity report diagram
 yg akan menampilkan konten laporan sesuai dengan menu yg di klik oleh user
 
-![GitHub Logo](/design/app_5.png) 
+![GitHub Logo](/design/app_5_small.png) 
 
 
 
@@ -108,7 +108,7 @@ adalah salah satu konten dalam activity report diagram yg hanya akan ditampilkan
 apabila user memilih menu list report, report ini akan menujukan data laporan pemasukan dan
 pengeluaran dalam bentuk tabel yg disusun dan diurutkan berdasarkan tanggal
 
-![GitHub Logo](/design/app_6.png) 
+![GitHub Logo](/design/app_6_small.png) 
 
 
 
@@ -118,7 +118,7 @@ adalah salah satu konten dalam activity report diagram yg hanya akan ditampilkan
 apabila user memilih menu Line Report, report ini akan menujukan data laporan pemasukan dan
 pengeluaran dalam bentuk line diagram yg disusun dan diurutkan berdasarkan tanggal
 
-![GitHub Logo](/design/app_7.png) 
+![GitHub Logo](/design/app_7_small.png) 
 
 
 
@@ -130,7 +130,7 @@ apabila user memilih menu Pie Chart Report, report ini akan menujukan total sald
 pengeluaran dalam bentuk pie diagram untuk menujukan presentase besarnya pemasukan dan pengeluaran
 
 
-![GitHub Logo](/design/app_8.png) 
+![GitHub Logo](/design/app_8_small.png) 
 
 
 
@@ -143,7 +143,7 @@ dalam bentuk Waterfall diagram
 
 
 
-![GitHub Logo](/design/app_9.png) 
+![GitHub Logo](/design/app_9_small.png) 
 
 
 
@@ -154,7 +154,7 @@ adalah activity yang akan menentukan kapan user mau menerima notifikasi
 pada saat ada transaksi yg expired terdeteksi
 
 
-![GitHub Logo](/design/app_10.png) 
+![GitHub Logo](/design/app_10_small.png) 
 
 
 
@@ -164,7 +164,7 @@ pada saat ada transaksi yg expired terdeteksi
 adalah tampilan notifikasi bar untuk transaksi expired, saldo yang minus
 dan selamat datang, untuk notif selamat datang untuk saat ini belum di implementasi
 
-![GitHub Logo](/design/app_11.png) 
+![GitHub Logo](/design/app_11_small.png) 
 
 
 
@@ -173,4 +173,4 @@ dan selamat datang, untuk notif selamat datang untuk saat ini belum di implement
 adalah tampilan alert dialog yg akan menanyakan kepada user
 apakah ia yakin ingin menghapus data transaksi yg dipilih
 
-![GitHub Logo](/design/app_12.png) 
+![GitHub Logo](/design/app_12_small.png) 
