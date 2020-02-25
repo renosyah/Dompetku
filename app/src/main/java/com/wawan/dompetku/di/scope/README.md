@@ -1,0 +1,3 @@
+# DI Scope
+
+Dalam satu kalimat, scope adalah durasi tetap dari panggilan waktu atau metode di mana suatu objek ada. Dengan kata lain, ruang lingkup adalah konteks di mana kunci yang diberikan mengacu pada contoh yang sama. Cara lain untuk melihat ini adalah dengan menganggap ruang lingkup sebagai jumlah waktu keadaan objek tetap. Ketika konteks lingkup berakhir, objek apa pun yang terikat di bawah lingkup itu dikatakan berada di luar cakupan dan tidak dapat disuntikkan lagi dalam contoh lain.
