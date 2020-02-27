@@ -12,6 +12,10 @@ import com.wawan.dompetku.util.UtilFunction;
 
 import java.sql.Date;
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses bisnis aplikasi
+// seperti query ke db
 public class MainMenuActivityPresenter implements MainMenuActivityContract.Presenter {
 
     private MainMenuActivityContract.View view;

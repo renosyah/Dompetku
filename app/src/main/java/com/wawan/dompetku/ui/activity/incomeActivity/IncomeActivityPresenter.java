@@ -11,6 +11,10 @@ import com.wawan.dompetku.model.transaction.TransactionViewModel;
 
 import java.util.List;
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses bisnis aplikasi
+// seperti query ke db
 public class IncomeActivityPresenter implements IncomeActivityContract.Presenter {
 
     private IncomeActivityContract.View view;

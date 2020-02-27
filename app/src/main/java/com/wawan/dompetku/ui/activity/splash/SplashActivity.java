@@ -12,10 +12,15 @@ import com.wawan.dompetku.ui.activity.mainMenuActivity.MainMenuActivity;
 import static com.wawan.dompetku.service.AppReceiver.ACTION_RESTART_SERVICE;
 import static com.wawan.dompetku.util.UtilFunction.isMyServiceRunning;
 
+// adalah aktivity yg menampilkan splash screen loading
+// aplikasi menggukana delay selama 3 detik
 public class SplashActivity extends AppCompatActivity {
 
+    // deklarasi konteks
     private Context context;
 
+    // fungsi yg dipanggil saat activity
+    // dibuat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,23 +28,33 @@ public class SplashActivity extends AppCompatActivity {
         initWidget();
     }
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     private void initWidget(){
+
+        // inisialisasi kontekt
         this.context = this;
 
+        // deklarasi dan inisialisasi
+        // object handler yg nantinya digunakan
+        // untuk menjalankan aksi
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
+                // cek jika service notif berjalan
                 if (!isMyServiceRunning(context,NotifService.class)) {
 
-                    // tell app receiver to restart
-                    // notif service
+                    // jika tidak, beritahu broadcast receiver
+                    // untuk menjalankan service notifikasi
                      Intent i = new Intent(ACTION_RESTART_SERVICE);
                      i.setClass(getBaseContext(), AppReceiver.class);
                      getBaseContext().sendBroadcast(i);
                 }
 
+                // panggil aktivity menu utama
+                // dan selesai, hancurkan activity ini
                 startActivity(new Intent(context, MainMenuActivity.class));
                 finish();
             }

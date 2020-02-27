@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.wawan.dompetku.model.transaction.TransactionModel;
 import com.wawan.dompetku.model.transaction.TransactionViewModel;
 
+// adalah class presenter untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi yg berkaitan dengan proses bisnis aplikasi
+// seperti query ke db
 public class ExpenseActivityPresenter implements ExpenseActivityContract.Presenter {
 
     private ExpenseActivityContract.View view;

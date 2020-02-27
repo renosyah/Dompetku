@@ -7,6 +7,10 @@ import com.wawan.dompetku.model.transaction.TransactionModel;
 
 import java.sql.Date;
 
+// adalah class contract untuk activity ini
+// yg mana class ini akan menghandle
+// fungsi-fungsi apa saja yg dibutkan untuk
+// komunikasi antar view dengan presenter
 public class MainMenuActivityContract {
     public interface View extends BaseContract.View {
         public void showProgress(Boolean show);
