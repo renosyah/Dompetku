@@ -4,6 +4,10 @@ import androidx.room.ColumnInfo;
 
 import com.wawan.dompetku.model.BaseModel;
 
+
+// adalah model untuk kasus khusus
+// untuk menangkap hasil query
+// pemasukkan dan pengeluaran
 public class IncomeAndExpenseModel extends BaseModel {
 
     @ColumnInfo(name = "total_income")

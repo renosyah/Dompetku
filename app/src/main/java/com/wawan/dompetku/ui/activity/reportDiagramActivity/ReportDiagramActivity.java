@@ -53,14 +53,9 @@ import javax.inject.Inject;
 import static com.wawan.dompetku.util.Flow.FLOW_EXPENSE;
 import static com.wawan.dompetku.util.Flow.FLOW_INCOME;
 import static com.wawan.dompetku.util.UtilFunction.formatter;
-import static com.wawan.dompetku.util.UtilFunction.getMonthForInt;
 
 public class ReportDiagramActivity extends AppCompatActivity implements ReportDiagramActivityContract.View {
 
-    private static final int FLAG_DAILY_REPORT = 0;
-    private static final int FLAG_WEEKLY_REPORT = 1;
-    private static final int FLAG_MONTLY_REPORT = 2;
-    private static final int FLAG_NO_INTERVAL = 3;
 
     @Inject
     public ReportDiagramActivityContract.Presenter presenter;
@@ -84,7 +79,6 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
     private int offset = 0,limit = 15;
 
     private LinearLayout chartReportLayout;
-    private int flagReportType = BuildConfig.DEFAULT_INTERVAL_REPORT;
 
 
     @Override
@@ -234,7 +228,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
     }
 
-    private void setWaterfall(int typeReport,List<TransactionModel> t){
+    private void setWaterfall(List<TransactionModel> t){
 
         Waterfall waterfall = AnyChart.waterfall();
         waterfall.title(context.getString(R.string.waterfall_chart_report_string));
@@ -263,41 +257,9 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
             Calendar cal = Calendar.getInstance();
             cal.setTime(i.getDate());
 
-            switch (typeReport){
-
-                case FLAG_DAILY_REPORT:
-
-                    data.add(new ValueDataEntry(
-                            cal.get(Calendar.DATE) + ", " + getMonthForInt(cal.get(Calendar.MONTH)),
-                            i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
-                case FLAG_WEEKLY_REPORT:
-
-                    data.add(new ValueDataEntry(
-                            getMonthForInt(cal.get(Calendar.MONTH)) + ": " + cal.get(Calendar.WEEK_OF_MONTH),
-                            i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
-                case FLAG_MONTLY_REPORT:
-
-                    data.add(new ValueDataEntry(
-                            getMonthForInt(cal.get(Calendar.MONTH)),
-                            i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
-                case FLAG_NO_INTERVAL:
-                    data.add(new ValueDataEntry(
-                        num + "",
-                        i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
-
-                    break;
-
-                    default: break;
-            }
+            data.add(new ValueDataEntry(
+                    num + "",
+                    i.getFlow() == FLOW_INCOME ? i.getAmount() : i.getAmount() - i.getAmount()*2));
 
             num++;
 
@@ -333,7 +295,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         chartReport.setChart(waterfall);
     }
 
-    private void setLineGraph(int typeReport,List<TransactionModel> t){
+    private void setLineGraph(List<TransactionModel> t){
 
         Cartesian cartesian = AnyChart.line();
 
@@ -371,33 +333,9 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
             Double totalExpense = i.getFlow() == FLOW_EXPENSE ? i.getAmount() : 0.0;
             Double totalIncome = i.getFlow() == FLOW_INCOME ? i.getAmount() : 0.0;
 
-            switch (typeReport){
+            seriesData.add(new UtilFunction.CustomDataEntry(num + "",
+                    totalIncome, totalExpense));
 
-                 case FLAG_DAILY_REPORT:
-
-                    seriesData.add(new UtilFunction.CustomDataEntry(
-                            cal.get(Calendar.DATE) + ", " + getMonthForInt(cal.get(Calendar.MONTH)),
-                            totalIncome, totalExpense));
-                    break;
-
-                case FLAG_WEEKLY_REPORT:
-                    seriesData.add(new UtilFunction.CustomDataEntry(
-                            getMonthForInt(cal.get(Calendar.MONTH)) + ": " + cal.get(Calendar.WEEK_OF_MONTH),
-                            totalIncome, totalExpense));
-                    break;
-
-                case FLAG_MONTLY_REPORT:
-                    seriesData.add(new UtilFunction.CustomDataEntry(getMonthForInt(cal.get(Calendar.MONTH)),
-                            totalIncome, totalExpense));
-                    break;
-
-                case FLAG_NO_INTERVAL:
-                    seriesData.add(new UtilFunction.CustomDataEntry(num + "",
-                            totalIncome, totalExpense));
-                    break;
-
-                default: break;
-            }
             num++;
 
         }
@@ -460,12 +398,12 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
     @Override
     public void onGetAllTransactionForWaterfall(@Nullable List<TransactionModel> t) {
-        if (t != null) setWaterfall(flagReportType, t);
+        if (t != null) setWaterfall(t);
     }
 
     @Override
     public void onGetAllTransactionForLine(@Nullable List<TransactionModel> t) {
-        if (t != null) setLineGraph(flagReportType, t);
+        if (t != null) setLineGraph(t);
     }
 
     @Override

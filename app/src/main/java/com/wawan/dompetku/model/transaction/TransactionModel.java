@@ -11,35 +11,60 @@ import com.wawan.dompetku.model.BaseModel;
 import java.sql.Date;
 import java.util.Calendar;
 
-
+// adalah model untuk data transaksi
+// dengan nama tabel transaction_data
 @Entity(tableName = "transaction_data")
 public class TransactionModel extends BaseModel {
 
+    // id sebagai primary key
+    // dengan tipe int
+    // dan auto increment
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     private int Id;
 
+    // adalah tipe kategory yg dipilih
+    // untuk kategori pengeluaran
+    // dan pemasukkan
     @ColumnInfo(name = "category_code")
     private int CategoryCode;
 
+    // adalah kurensi
+    // atau mata uang yg digunakan
+    // saat transaksi
     @ColumnInfo(name = "currency")
     private String Currency;
 
+
+    // adalah jumlah total saldo
+    // pada transaksi
     @ColumnInfo(name = "amount")
     private Double Amount;
 
+    // adalah deskripsi
+    // yg digunakan oleh user
+    // untuk membedakan transaksi
     @ColumnInfo(name = "description")
     private String Description;
 
+    // tanggal transaksi
+    // pada saat transaksi terjadi
     @ColumnInfo(name = "date")
     private Date Date;
 
+    // tanggal data transaksi dibuat
+    // pada saat data transaksi dibuat
     @ColumnInfo(name = "create_at")
     private Date CreateAt;
 
+    // adalah tipe yg menentukan
+    // apakah data transaksi
+    // transaksi pengeluaran atau pemasukkan
     @ColumnInfo(name = "flow")
     private int Flow;
 
+    // digunakan untuk menampilkan header
+    // pada laporan list report
     @Ignore
     public boolean isHeader = false;
 

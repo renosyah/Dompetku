@@ -7,9 +7,17 @@ import com.wawan.dompetku.model.BaseModel;
 
 import java.util.ArrayList;
 
+// adalah model menu yg digunakan
+// sebagai item menu utama dan menu laporan
 public class MenuModel extends BaseModel {
+
+    // id menu
     public int Id;
+
+    // icon yg digunakan
     public int Icon;
+
+    // text untuk menu
     public String Text;
 
     public MenuModel(int id, int icon, String text) {
@@ -23,6 +31,9 @@ public class MenuModel extends BaseModel {
     public static final int ID_COMMON_NEED_EXPENSE = 2;
     public static final int ID_REPORT = 3;
 
+
+    // static fungsi yg digunakan untuk
+    // menginisialisasi menu utama
     public static ArrayList<MenuModel> getMainMenuList(Context c) {
         ArrayList<MenuModel> menus = new ArrayList<>();
         menus.add(new MenuModel(ID_FOOD_EXPENSE, R.drawable.food,c.getString(R.string.food_expense)));
@@ -38,6 +49,8 @@ public class MenuModel extends BaseModel {
     public static final int ID_REPORT_PIE_DIAGRAM = 2;
     public static final int ID_REPORT_WATERFALL_DIAGRAM = 3;
 
+    // static fungsi yg digunakan untuk
+    // menginisialisasi menu laporan
     public static ArrayList<MenuModel> getReportMenuList(Context c) {
         ArrayList<MenuModel> menus = new ArrayList<>();
         menus.add(new MenuModel(ID_REPORT_LIST, R.drawable.list_diagram,c.getString(R.string.list_report_title_menu)));

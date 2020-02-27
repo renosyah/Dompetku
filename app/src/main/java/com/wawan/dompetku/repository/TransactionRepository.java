@@ -14,11 +14,21 @@ import com.wawan.dompetku.util.UtilFunction;
 import java.sql.Date;
 import java.util.List;
 
+// transaksi repository
+// adalah fungsi yg akan memanggil perintah query
+// ke db pool
 public class TransactionRepository {
 
+    // variabel aplikasi
     private Application application;
+
+    // variabel transaction dao
     private TransactionDao transactionDao;
 
+
+    // konstruktor
+    // untuk inisialisai view model
+    // dengan aplikasi sebagai paramter
     public TransactionRepository(@NonNull Application application) {
         transactionDao = AppDatabase.getDatabase(application).transactionDao();
         this.application = application;

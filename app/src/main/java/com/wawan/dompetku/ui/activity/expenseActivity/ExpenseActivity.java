@@ -33,57 +33,96 @@ import static com.wawan.dompetku.util.ExpenseCategory.getCategory;
 import static com.wawan.dompetku.util.Flow.FLOW_EXPENSE;
 import static com.wawan.dompetku.util.UtilFunction.formatter;
 
+// adalah aktivity yg menyediakan form
+// untuk menginput data transaksi pengeluaran
 public class ExpenseActivity extends AppCompatActivity implements ExpenseActivityContract.View {
 
+    // presenter yg diinject ke activity
     @Inject
     public ExpenseActivityContract.Presenter presenter;
 
+    // deklarasi konteks dan intent
     private Context context;
     private Intent intent;
 
+    // deklarasi view untuk activity
+    // dan data menu yg nantinya didapat dari
+    // intent
     private MenuModel m;
     private ImageView back;
     private TextView title;
     private ImageView icon;
 
+    // inisialisasi data transaksi pengeluaran
     private TransactionModel expense = new TransactionModel(CATEGORY_NON_EXPENSE,"", 0.0, "", null, FLOW_EXPENSE);
 
+    // deklarasi view layout
+    // dan view untuk form
     private LinearLayout addDate,addDes,addAmount;
     private TextView date,des,amount;
-
     private Button save;
 
+
+    // fungsi yg dipanggil saat activity
+    // dibuat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense);
         initWidget();
     }
+
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     private void initWidget() {
+
+        // inisialisasi konteks dan intent
         this.context = this;
         this.intent = getIntent();
 
+        // inisialisai menu yg datanya didapat dari intent
         this.m = (MenuModel) intent.getSerializableExtra("menu");
 
+        // memanggil fungsi inject
+        // ke activity ini
         injectDependency();
         presenter.attach(this);
         presenter.subscribe();
 
+
+        // inisialisai text view tanggal
         date = findViewById(R.id.date_expense_textview);
         Calendar cal = Calendar.getInstance();
         expense.setDate(new Date(cal.getTime().getTime()));
+
+        // dan diset text dengan default tanggal lokal
         date.setText(expense.getDate().toString());
 
+
+        // inisialisasi text view deskripsi
         des = findViewById(R.id.des_expense_textview);
+
+        // inisialisasi text view jumlah saldo
         amount = findViewById(R.id.amount_expense_textview);
 
+        // inisialisasi text view judul aktivity
         title = findViewById(R.id.title_expense_textview);
+
+        // yg teksnya didapat dari text dari object menu
         title.setText(m.Text);
 
+        // inisialisasi image view icon
+        // untuk menujukan pengeluaran tipe apa
         icon = findViewById(R.id.icon_expense_imageview);
+
+        // yg image idnya didapat dari icon dari object menu
         icon.setImageDrawable(ContextCompat.getDrawable(context,m.Icon));
 
+        // inisialisasi image view untuk tombol kembali
         back = findViewById(R.id.back_imageview);
+
+        // lalu di set pada saat image ditekan
+        // akan menghancurkan activity
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +130,9 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
             }
         });
 
+
+        // inisialisasi image view untuk memunculkan dialog
+        // meminta user memilih tanggal transaksi
         addDate = findViewById(R.id.date_expense_layout);
         addDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +161,8 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
             }
         });
 
+        // inisialisasi image view untuk memunculkan dialog
+        // meminta user mengeset deksripsi
         addDes = findViewById(R.id.des_expense_layout);
         addDes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +176,13 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
                         des.setText(text);
                     }
 
+                    // untuk saat ini belum dibutuhkan
                     @Override
                     public void onEmpty() {
 
                     }
 
+                    // untuk saat ini belum dibutuhkan
                     @Override
                     public void onCancel() {
 
@@ -146,6 +192,8 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
             }
         });
 
+        // inisialisasi image view untuk memunculkan dialog
+        // meminta user mengeset jumlah saldo pengeluaran
         addAmount = findViewById(R.id.amount_expense_layout);
         addAmount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,11 +207,13 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
                         amount.setText(formatter.format(expense.getAmount()));
                     }
 
+                    // untuk saat ini belum dibutuhkan
                     @Override
                     public void onEmpty() {
 
                     }
 
+                    // untuk saat ini belum dibutuhkan
                     @Override
                     public void onCancel() {
 
@@ -173,7 +223,9 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
         });
 
 
-
+        // inisialisasi button save
+        // pada saat diklik akan melakukan
+        // validasi jika data transaksi valid
         save = findViewById(R.id.add_expense_button);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +234,9 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
                     Toast.makeText(context,context.getString(R.string.data_income_is_not_valid),Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                // lalu akan memanggil presenter untuk menyimpan data
+                // transaksi ke database
                 expense.setCategoryCode(getCategory(m.Id));
                 expense.setCurrency(BuildConfig.CURRENCY);
                 presenter.addExpense(expense);
@@ -189,23 +244,31 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
         });
     }
 
+    // yg akan dipanggil saat
+    // sebuah transaksi pengeluaran
+    // berhasil di simpan ke db
+    // dan akan menghancurkan aktiviti ini
     @Override
     public void onAddExpense() {
         finish();
     }
 
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showProgress(Boolean show) {
 
     }
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showError(String error) {
 
     }
 
 
+    // fungsi yg akan dipanggil saat activity
+    // dihancurkan
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -213,6 +276,8 @@ public class ExpenseActivity extends AppCompatActivity implements ExpenseActivit
     }
 
 
+    // pemanggilan register
+    // dependensi injeksi untuk aktivity ini
     private void injectDependency(){
         ActivityComponent listcomponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))

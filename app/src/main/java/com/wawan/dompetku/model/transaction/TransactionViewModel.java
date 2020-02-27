@@ -10,15 +10,25 @@ import com.wawan.dompetku.util.UtilFunction;
 import java.sql.Date;
 import java.util.List;
 
+// transaksi view model
+// adalah fungsi yg akan memanggil perintah query
+// ke repository
 public class TransactionViewModel extends AndroidViewModel {
 
+    // variabel repository
     private TransactionRepository repository;
 
+    // konstruktor
+    // untuk inisialisai view model
+    // dengan aplikasi sebagai paramter
     public TransactionViewModel(@NonNull Application application) {
         super(application);
         repository = new TransactionRepository(application);
     }
 
+    // konstruktor
+    // untuk inisialisai view model
+    // dengan repository sebagai paramter
     public TransactionViewModel(TransactionRepository repository) {
         super(repository.getApplication());
         this.repository = repository;
