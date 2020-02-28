@@ -10,15 +10,27 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+
+// ini adalah class untuk mendeklarasikan
+// fungsi yg nantinya akna digunakan berkali kali
+// oleh program
+// dalam kasus ini adalah penyimpanan cache
 public class SerializableSave {
+
+    // deklarasi variabel
     private Context context;
     private String filename;
 
+
+    // konstruktor class
     public SerializableSave(Context context, String filename) {
         this.context = context;
         this.filename = filename;
     }
 
+    // fungsi turunan
+    // untuk menyimpan object
+    // bertipe seriazable
     public boolean save(Serializable s){
         boolean save = false;
         try {
@@ -37,6 +49,9 @@ public class SerializableSave {
         return save;
     }
 
+    // fungsi turunan
+    // untuk meload object
+    // bertipe seriazable
     public Serializable load(){
         Serializable data = null;
 
@@ -56,6 +71,9 @@ public class SerializableSave {
 
     }
 
+    // fungsi turunan
+    // untuk menghapus object
+    // bertipe seriazable
     public boolean delete(){
         File f = new File(context.getFilesDir(), filename);
         return f.delete();

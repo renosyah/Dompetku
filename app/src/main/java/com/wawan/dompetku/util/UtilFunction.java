@@ -27,24 +27,36 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
+// ini adalah class untuk mendeklarasikan
+// fungsi yg nantinya akna digunakan berkali kali
+// oleh program
+// dalam kasus ini fungsi-fungsi umum
 public class UtilFunction {
 
+    // class cache model
+    // untuk menyimpan cache sederhana
+    // yg datanya hanya berisi text
     public static class CacheModel extends BaseModel {
         public String Text = "";
-
         public CacheModel(String text) {
             Text = text;
         }
     }
 
+    // class cache model
+    // untuk menyimpan cache sederhana
+    // yg datanya hanya berisi data tanggal
+    // bertipe long (int64)
     public static class LastDateCacheModel extends BaseModel {
         public long date = 0;
-
         public LastDateCacheModel(long date) {
             this.date = date;
         }
     }
 
+    // class custom data entry
+    // yg diguanakn sebagai content
+    // untuk line chart
     public static class CustomDataEntry extends ValueDataEntry {
         public CustomDataEntry(String x, Number value, Number value2) {
             super(x, value);
@@ -52,34 +64,12 @@ public class UtilFunction {
         }
     }
 
+    // simple variabel untuk format angka deciman
     public static final DecimalFormat formatter = new DecimalFormat("##,###");
 
-    /** Create a File for saving an image or video */
-    public static File getOutputMediaFile(Context c){
-        // To be safe, you should check that the SDCard is mounted
-        // using Environment.getExternalStorageState() before doing this.
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
-                + "/Android/data/"
-                + c.getPackageName()
-                + "/Files");
-
-        // This location works best if you want the created images to be shared
-        // between applications and persist after your app has been uninstalled.
-
-        // Create the storage directory if it does not exist
-        if (! mediaStorageDir.exists()){
-            if (! mediaStorageDir.mkdirs()){
-                return null;
-            }
-        }
-        // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
-        File mediaFile;
-        String mImageName="MI_"+ timeStamp +".png";
-        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
-        return mediaFile;
-    }
-
+    // simpel fungsi untuk mengecek apakah
+    // service sedang running
+    // dengan memberikan nama class service
     public static boolean isMyServiceRunning(Context c,Class<?> s) {
         ActivityManager manager = (ActivityManager) c.getSystemService(Context.ACTIVITY_SERVICE);
         assert manager != null;
@@ -91,17 +81,10 @@ public class UtilFunction {
         return false;
     }
 
-
-    public static String getMonthForInt(int num) {
-        String month = "wrong";
-        DateFormatSymbols dfs = new DateFormatSymbols();
-        String[] months = dfs.getMonths();
-        if (num >= 0 && num <= 11 ) {
-            month = months[num];
-        }
-        return month;
-    }
-
+    // class converter tanggal
+    // yg dibutuhkan untuk melakukan
+    // konversi tanggal di android room
+    // ini bersifat mandatory
     public static class Converters {
         @TypeConverter
         public static java.sql.Date fromTimestamp(Long value) {
@@ -119,6 +102,9 @@ public class UtilFunction {
     public static final String NOTIF_CHANNEL_DES = BuildConfig.APPLICATION_ID + "_NOTIFICATION_DES";
     public static final int importance = NotificationManager.IMPORTANCE_HIGH;
 
+    // fungsi untuk memunculkan notifikasi
+    // yg akan menampilkan notif transaksi expired
+    // atau notif biasa
     public static void sendNotification(Context c,int icon,String message) {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(c, NOTIF_CHANNEL_ID)
@@ -142,6 +128,7 @@ public class UtilFunction {
         notificationManager.notify(new Random(System.currentTimeMillis()).nextInt(100), builder.build());
     }
 
+    // fungsi untuk mendapatkan tanggal kurang satu bulan
     public static java.sql.Date getExpiredTransactionDate(){
         Calendar c = Calendar.getInstance();
         c.add(Calendar.MONTH, -1);
@@ -150,18 +137,16 @@ public class UtilFunction {
     }
 
 
-    public static void saveCache(Context c,String n,String v){
-        new SerializableSave(c,"cache_" + n +".cache").save(new UtilFunction.CacheModel(v));
-    }
-
-    public static Serializable getNotifiedCache(Context c,String n){
-        return new SerializableSave(c,"cache_" + n +".cache").load();
-    }
-
+    // simpel unterface untuk callback
+    // jika di kotlin menggunakan lamba
+    // seperti: ()->Unit
     public interface Unit<T>{
         void invoke(@Nullable T o);
     }
 
+    // fungsi untuk membandingkan tanggal
+    // jika sama maka true
+    // namun hanya membandingkan jam dan menit
     public static boolean isSameTime(Calendar a,Calendar b){
         return a.get(Calendar.HOUR_OF_DAY) == b.get(Calendar.HOUR_OF_DAY) && a.get(Calendar.MINUTE) == b.get(Calendar.MINUTE);
     }

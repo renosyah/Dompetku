@@ -16,7 +16,12 @@ import com.wawan.dompetku.R;
 
 import static com.wawan.dompetku.util.UtilFunction.formatter;
 
+// ini adalah class alert dialog
+// yg akan ditampilkan saat user ingin
+// menginputkan text atau jumlah saldo
 public class DialogSimpleEditText {
+
+    // deklarasi variabel
     private Context context;
     private OnDialogListener listener;
     private String title;
@@ -24,6 +29,8 @@ public class DialogSimpleEditText {
     private Double number = 0.0;
     private boolean typeNumber = false;
 
+    // konstruktor class
+    // digunakan jika kasus yg ingin dipakai adalah mengedit text
     public DialogSimpleEditText(Context context, String title,String text,OnDialogListener listener) {
         this.context = context;
         this.title = title;
@@ -31,6 +38,8 @@ public class DialogSimpleEditText {
         this.text = text;
     }
 
+    // konstruktor class
+    // digunakan jika kasus yg ingin dipakai adalah mengedit saldo
     public DialogSimpleEditText(Context context,String title, String text, OnDialogListener listener,  boolean typeNumber) {
         this.context = context;
         this.listener = listener;
@@ -39,6 +48,8 @@ public class DialogSimpleEditText {
         this.typeNumber = typeNumber;
     }
 
+    // fungsi turunan
+    // yg akan menampilkan alert dialog
     public void show(){
         View v = ((Activity)context).getLayoutInflater().inflate(R.layout.edit_text_dialog,null);
         final AlertDialog dialog = new AlertDialog.Builder(context).create();
@@ -62,12 +73,12 @@ public class DialogSimpleEditText {
                 @Override
                 public void afterTextChanged(Editable ignore) {
                     text_editText.removeTextChangedListener(this);
-                    Log.e("num",text_editText.getText().toString().replaceAll("[-+.^:,]",""));
+
                     if (!text_editText.getText().toString().isEmpty()){
                         String s = text_editText.getText().toString().replaceAll("[-+.^:,]","");
                         number = Double.parseDouble(s);
                     }
-                    Log.e("num int",number.toString());
+
                     text_editText.setText(text_editText.getText().toString().isEmpty() ? "" : formatter.format(number));
                     text_editText.setSelection(text_editText.getText().toString().length());
                     text_editText.addTextChangedListener(this);
@@ -110,6 +121,8 @@ public class DialogSimpleEditText {
         dialog.show();
     }
 
+    // interface yg akan diimplementasikan
+    // dan digunakan untuk callback
     public interface OnDialogListener {
         void onOk(String text);
         void onEmpty();

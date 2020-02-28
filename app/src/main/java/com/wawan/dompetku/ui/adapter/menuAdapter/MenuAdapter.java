@@ -17,15 +17,25 @@ import com.wawan.dompetku.model.menu.MenuModel;
 
 import java.util.ArrayList;
 
+// ini adalah class adapter untuk recycleview
+// dalam kasus ini adapter ini akan digunakan
+// untuk menampilkan item item menu
+// yg nantinya akan dipilih oleh user
+// berbeda dengan adapter transaksi
+// adapter ini akan mengeninisialisasi
+// datnya berdasarkan tipe menu yg diinginkan
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.Holder> {
 
+    // tipe menu yg diinginkan
     public static final int MAIN_MENU_LIST = 0;
     public static final int REPORT_MENU_LIST = 1;
 
+    // deklarasi variabel
     private Context context;
     private OnMainMenuAdapterItemClickListener listener;
     private ArrayList<MenuModel> list;
 
+    // konstruktor class
     public MenuAdapter(Context context,int menuType, OnMainMenuAdapterItemClickListener listener) {
         this.context = context;
         this.listener = listener;
@@ -42,12 +52,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.Holder> {
 
     }
 
+    // fungsi yg akan dilankan saat
+    // menampilkan view
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new Holder(((Activity)context).getLayoutInflater().inflate(R.layout.menu_adapter,parent,false));
     }
 
+    // fungsi yg akan dipanggil saat view berhasil di bind
+    // ke adapter
     @Override
     public void onBindViewHolder(@NonNull Holder holder, final int position) {
         final MenuModel item = list.get(position);
@@ -62,11 +76,19 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.Holder> {
 
     }
 
+    // fungsi yg akan digunakan untuk
+    // mengetahui panjang adapter
+    // dan jug adigunakan untuk menentukan panjang kontent
+    // dari view recycleview
     @Override
     public int getItemCount() {
         return list.size();
     }
 
+
+    // view holder
+    // adalah class untuk mendeklarasi
+    // dan inisialisasi view
     public class Holder extends RecyclerView.ViewHolder {
         public ImageView icon;
         public TextView text;
@@ -80,6 +102,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.Holder> {
         }
     }
 
+    // interface yg akan diimplementasikan
+    // dan digunakan untuk callback
     public interface OnMainMenuAdapterItemClickListener {
         void onItemClick(@NonNull MenuModel m, int pos);
     }

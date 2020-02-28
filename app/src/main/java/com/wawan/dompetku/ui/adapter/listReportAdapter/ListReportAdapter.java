@@ -17,24 +17,37 @@ import java.util.ArrayList;
 import static com.wawan.dompetku.util.Flow.FLOW_INCOME;
 import static com.wawan.dompetku.util.UtilFunction.formatter;
 
+
+// ini adalah class adapter untuk recycleview
+// dalam kasus ini adapter ini akan digunakan
+// untuk menampilkan item item transaksi
+// yg nantinya akan dipilih oleh user
 public class ListReportAdapter extends RecyclerView.Adapter<ListReportAdapter.Holder> {
 
+    // deklarasi variabel
     private Context context;
     private ArrayList<TransactionModel> list;
     private OnListReportAdapterListener listener;
 
+
+    // konstruktor class
     public ListReportAdapter(Context context, ArrayList<TransactionModel> list, OnListReportAdapterListener listener) {
         this.context = context;
         this.list = list;
         this.listener = listener;
     }
 
+
+    // fungsi yg akan dilankan saat
+    // menampilkan view
     @NonNull
     @Override
     public Holder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new Holder(((Activity)context).getLayoutInflater().inflate(R.layout.list_report_adapter,parent,false));
     }
 
+    // fungsi yg akan dipanggil saat view berhasil di bind
+    // ke adapter
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
         TransactionModel item = list.get(position);
@@ -57,11 +70,18 @@ public class ListReportAdapter extends RecyclerView.Adapter<ListReportAdapter.Ho
         holder.amount.setTextColor(item.getFlow() == FLOW_INCOME ? ContextCompat.getColor(context,R.color.textColorGreen) : ContextCompat.getColor(context,R.color.textColorRed) );
     }
 
+    // fungsi yg akan digunakan untuk
+    // mengetahui panjang adapter
+    // dan jug adigunakan untuk menentukan panjang kontent
+    // dari view recycleview
     @Override
     public int getItemCount() {
         return list.size();
     }
 
+    // view holder
+    // adalah class untuk mendeklarasi
+    // dan inisialisasi view
     public class Holder extends RecyclerView.ViewHolder {
         public LinearLayout header;
         public LinearLayout body;
@@ -81,6 +101,8 @@ public class ListReportAdapter extends RecyclerView.Adapter<ListReportAdapter.Ho
         }
     }
 
+    // interface yg akan diimplementasikan
+    // dan digunakan untuk callback
     public interface OnListReportAdapterListener {
         void onClick(@NonNull TransactionModel t,int pos);
     }
