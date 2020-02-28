@@ -26,17 +26,27 @@ import javax.inject.Inject;
 import static com.wawan.dompetku.service.NotifService.ACTION_CHANGE_TIME_SCHEDULE_FOR_NOTIFICATION;
 import static com.wawan.dompetku.service.NotifService.savedDate;
 
+// adalah activity yg digunakan
+// untuk mengatur waktu notifikasi
+// dan menunjukan profile tentang aplikasi
 public class SettingActivity extends AppCompatActivity implements SettingActivityContract.View {
 
+
+    // presenter yg akan diinject ke activity
     @Inject
     public SettingActivityContract.Presenter presenter;
 
+    // deklarasi variabel kontekt
     private Context context;
 
+    // deklarasi view
     private ImageView back;
     private TextView settingNotif;
     private TextView aboutApp;
 
+
+    // fungsi yg dipanggil saat activity
+    // dibuat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +54,22 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
         initWidget();
     }
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     private void initWidget(){
+
+        // inisialisasi kontekt
         this.context = this;
 
+        // deklarasi dan inisialisasi
+        // object handler yg nantinya digunakan
+        // untuk menjalankan aksi
         injectDependency();
         presenter.attach(this);
         presenter.subscribe();
 
+        // inisialisasi tombol kembali
+        // yg pada saat ditekan akan menghancurkan aplikasi
         back = findViewById(R.id.back_imageview);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +77,10 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
                 finish();
             }
         });
+
+        // inisialisasi tombol setting
+        // pada saat ditekan akan menampilkan popup
+        // untuk user memilih waktu notifikasi
         settingNotif = findViewById(R.id.setting_notif);
         settingNotif.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,15 +96,14 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
                         now.set(Calendar.MINUTE,minute);
                         now.set(Calendar.SECOND,0);
 
-                        // new notif time is set
+                        // broadcast setingan baru ke service
                         Intent i = new Intent(ACTION_CHANGE_TIME_SCHEDULE_FOR_NOTIFICATION);
                         i.putExtra("date",now.getTimeInMillis());
                         sendBroadcast(i);
 
+
+                        // simpan cache tanggal notifikasi
                         savedDate(context,new java.sql.Date(now.getTimeInMillis()));
-
-                        Log.e("date send",now.getTime().toString());
-
                     }
                 },true);
                 dpd.setAccentColor(ContextCompat.getColor(context,R.color.colorPrimaryLight));
@@ -90,6 +112,10 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
 
             }
         });
+
+        // inisialisai tombol tentang aplikasi
+        // yg pada saat diklik akan muncul dialog
+        // untuk menunjukan profile tentang aplikasi
         aboutApp = findViewById(R.id.about_app);
         aboutApp .setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,24 +139,29 @@ public class SettingActivity extends AppCompatActivity implements SettingActivit
     }
 
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showProgress(Boolean show) {
 
     }
 
+
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showError(String error) {
 
     }
 
-
+    // fungsi yg akan dipanggil saat activity
+    // dihancurkan
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.unsubscribe();
     }
 
-
+    // pemanggilan register
+    // dependensi injeksi untuk aktivity ini
     private void injectDependency(){
         ActivityComponent listcomponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))

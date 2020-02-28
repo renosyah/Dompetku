@@ -54,33 +54,45 @@ import static com.wawan.dompetku.util.Flow.FLOW_EXPENSE;
 import static com.wawan.dompetku.util.Flow.FLOW_INCOME;
 import static com.wawan.dompetku.util.UtilFunction.formatter;
 
+
+// ini adalah activity yg digunakan untuk
+// menampilkan laporan dalam bentuk list
+// maupun diagram berdasarkan menu
+// laporan yg diinginkan
 public class ReportDiagramActivity extends AppCompatActivity implements ReportDiagramActivityContract.View {
 
-
+    // presenter yg diinject
     @Inject
     public ReportDiagramActivityContract.Presenter presenter;
 
+    // deklarasi variabel
+    // konteks dan intent
     private Context context;
     private Intent intent;
 
+    // deklarasi menu
     private MenuModel m;
 
+    // deklarasi view
     private TextView title;
     private NestedScrollView scroll;
     private ImageView back;
     private TextView ammountBallance;
 
+    // deklarasi view untuk chart
     private AnyChartView chartReport;
+    private LinearLayout chartReportLayout;
 
+    // deklarasi view untuk view list report
     private LinearLayout listLayout;
     private RecyclerView listReport;
     private ListReportAdapter listReportAdapter;
     private ArrayList<TransactionModel> transactions = new ArrayList<>();
     private int offset = 0,limit = 15;
 
-    private LinearLayout chartReportLayout;
 
-
+    // fungsi yg dipanggil saat activity
+    // dibuat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,19 +100,33 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         initWidget();
     }
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     private void initWidget(){
+
+        // inisialisasi kontekt
+        // dan intent
         this.context = this;
         this.intent = getIntent();
 
+        // inisialisasi menu yg datanya diambil dari intent
         m = (MenuModel) this.intent.getSerializableExtra("menu");
 
+        // deklarasi dan inisialisasi
+        // object handler yg nantinya digunakan
+        // untuk menjalankan aksi
         injectDependency();
         presenter.attach(this);
         presenter.subscribe();
 
+        // inisialisasi title
+        // yg textnya diset dari menu yg dipilih sebelumnya
         title = findViewById(R.id.title_textview);
         title.setText(m.Text);
 
+        // inisialisasi tombol kembali
+        // pada saat ditekan akan menghancurkan
+        // activity
         back = findViewById(R.id.back_imageview);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +135,13 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
             }
         });
 
+        // inisialisasi laporan sisa saldo
+        // yg teksnya yg nantinya akan di set jumlah sisa saldo
         ammountBallance = findViewById(R.id.total_balance_report_textview);
         ammountBallance.setText(BuildConfig.CURRENCY  + " "+formatter.format(0));
 
+        // inisialisasi chart yg pada saat berhasil
+        // di render untuk sekarang kosong
         chartReport = findViewById(R.id.chart_report);
         chartReport.setOnRenderedListener(new AnyChartView.OnRenderedListener() {
             @Override
@@ -124,48 +154,75 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         // for header
         transactions.add(new TransactionModel(true));
 
+        // inisialisasi layout parent untuk chart
+        // yg visibilitynya di set berdasarkan menu yg dipilih sebelumnya
         chartReportLayout = findViewById(R.id.chart_report_layout);
         chartReportLayout.setVisibility(m.Id != MenuModel.ID_REPORT_LIST ? View.VISIBLE : View.GONE);
 
+        // inisialisasi layout parent untuk list report
+        // yg visibilitynya di set berdasarkan menu yg dipilih sebelumnya
         listLayout = findViewById(R.id.list_report_layout);
         listLayout.setVisibility(m.Id == MenuModel.ID_REPORT_LIST ? View.VISIBLE : View.GONE);
 
+        // inisialisasi untuk recycleview list report
         listReport = findViewById(R.id.list_report_recycleview);
 
+        // memanggil fungsi untuk mendapatkan data
+        // sisa saldo
         presenter.getBallance();
 
+        // memanggil fungsi untuk mendapatkan data
+        // report
         getReportData();
-
     }
 
+    // fungsi untuk mendapatkan data report
+    // namun kontent yg akan ditampilkan akan ditentukan
+    // berdasarkan item dari menu laporan yg dipilih sebelumnya
     private void getReportData(){
+
 
         if (m.Id == MenuModel.ID_REPORT_LIST) {
 
+            // jika menu yg dipilih adalah
+            // list report
             setListReport();
+
 
         } else if (m.Id == MenuModel.ID_REPORT_PIE_DIAGRAM){
 
+            // jika menu yg dipilih adalah
+            // pie diagram
             presenter.getIncomeExpense();
 
         } else if (m.Id == MenuModel.ID_REPORT_WATERFALL_DIAGRAM){
 
+            // jika menu yg dipilih adalah
+            // waterfall chart report
             presenter.getAllTransactionForWaterfall();
 
         } else if (m.Id == MenuModel.ID_REPORT_LINE_DIAGRAM){
 
+            // jika menu yg dipilih adalah
+            // line chart report
             presenter.getAllTransactionForLine();
         }
     }
 
 
+    // fungsi untuk mengeset adapter
+    // yg nantinya akan digunakan oleh recycleview
+    // list report
     private void setListReport(){
 
         listReportAdapter = new ListReportAdapter(context, transactions, new ListReportAdapter.OnListReportAdapterListener() {
             @Override
             public void onClick(@NonNull TransactionModel t, int pos) {
 
-                // show dialog delete transaction
+                // pada saat salah satu item dari
+                // data transaksi diklik
+                // maka tampilkan dialog
+                // hapus transaksi
                 new DialogDeleteTransaction(context,context.getString(R.string.delete_message) + " "  + t.getDate() + " " + t.getDescription() +  " ?", new DialogDeleteTransaction.OnDialogDeleteTransactionListener() {
                     @Override
                     public void onDelete() {
@@ -179,16 +236,29 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
                 }).show();
             }
         });
+
+        // set list report recycleview adapter
         listReport.setAdapter(listReportAdapter);
+
+        // lalu set layout managernya menggunakan linear layout manager
         listReport.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false));
 
+
+        // inisialisasi nested scrollview
         scroll = findViewById(R.id.scroll_report_nestedscrollview);
         if (m.Id == MenuModel.ID_REPORT_LIST){
+
+            // set listener pada saat user melakukan scroll
             scroll.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                    // jika user berhasil menyecroll
+                    // sampai ke dasar
+                    // maka akan dipanggil query untuk data berikutnya
                     if (scrollY >= v.getChildAt(v.getChildCount() - 1).getMeasuredHeight() - v.getMeasuredHeight()) {
-                        // pagination if user reach scroll to bottom on course
+
+                        // panggil data selajutnya
                         offset += limit;
                         presenter.getAllTransaction(offset,limit);
                     }
@@ -196,9 +266,16 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
             });
         }
 
+        // memanggil semua transaksi pemasukkan
+        // dengan paramter offset limit
+        // untuk pagination
         presenter.getAllTransaction(offset,limit);
     }
 
+
+    // fungsi yg digunakan untuk menampilkan diagram
+    // char kedalam bentuk piew chart
+    // dokumentasi lengkap bisa dilihat di : https://github.com/AnyChart/AnyChart-Android
     private void setPieChart(IncomeAndExpenseModel i){
 
         Pie pie = AnyChart.pie();
@@ -228,6 +305,9 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
 
     }
 
+    // fungsi yg digunakan untuk menampilkan diagram
+    // char kedalam bentuk waterfall
+    // dokumentasi lengkap bisa dilihat di : https://github.com/AnyChart/AnyChart-Android
     private void setWaterfall(List<TransactionModel> t){
 
         Waterfall waterfall = AnyChart.waterfall();
@@ -295,6 +375,9 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         chartReport.setChart(waterfall);
     }
 
+    // fungsi yg digunakan untuk menampilkan diagram
+    // char kedalam bentuk line chart
+    // dokumentasi lengkap bisa dilihat di : https://github.com/AnyChart/AnyChart-Android
     private void setLineGraph(List<TransactionModel> t){
 
         Cartesian cartesian = AnyChart.line();
@@ -379,33 +462,50 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         chartReport.setChart(cartesian);
     }
 
+
+    // fungsi yg digunakan pada saat berhasil
+    // melakukan query dari db untuk list transaksi
     @Override
     public void onGetAllTransaction(@Nullable List<TransactionModel> t) {
         if (t != null) transactions.addAll(t);
         listReportAdapter.notifyDataSetChanged();
     }
 
+    // fungsi yg digunakan pada saat berhasil
+    // melakukan query dari db untuk sisa saldo
     @Override
     public void onGetBallance(@Nullable Double amount) {
         ammountBallance.setText(BuildConfig.CURRENCY  + " " + formatter.format(0));
         if (amount != null) ammountBallance.setText(BuildConfig.CURRENCY  + " " + formatter.format(amount));
     }
 
+    // fungsi yg digunakan pada saat berhasil
+    // melakukan query dari db untuk saldo pemasukan
+    // dan pengeluaran untuk diagram pie
     @Override
     public void onGetIncomeExpense(@Nullable IncomeAndExpenseModel i) {
         if (i != null) setPieChart(i);
     }
 
+
+    // fungsi yg digunakan pada saat berhasil
+    // melakukan query dari db untuk data transaksi
+    // yg akan digunakan untuk diagram waterfall
     @Override
     public void onGetAllTransactionForWaterfall(@Nullable List<TransactionModel> t) {
         if (t != null) setWaterfall(t);
     }
 
+    // fungsi yg digunakan pada saat berhasil
+    // melakukan query dari db untuk data transaksi
+    // yg akan digunakan untuk diagram line
     @Override
     public void onGetAllTransactionForLine(@Nullable List<TransactionModel> t) {
         if (t != null) setLineGraph(t);
     }
 
+    // fungsi yg digunakan pada saat berhasil
+    // menghapus data transaksi dari db
     @Override
     public void onDeleteTransaction() {
         Toast.makeText(context,context.getString(R.string.transaction_is_deleted),Toast.LENGTH_SHORT).show();
@@ -418,25 +518,29 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
         listReportAdapter.notifyDataSetChanged();
     }
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showProgress(Boolean show) {
 
     }
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showError(String error) {
 
     }
 
 
-
+    // fungsi yg akan dipanggil saat activity
+    // dihancurkan
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.unsubscribe();
     }
 
-
+    // pemanggilan register
+    // dependensi injeksi untuk aktivity ini
     private void injectDependency(){
         ActivityComponent listcomponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))

@@ -21,15 +21,25 @@ import com.wawan.dompetku.ui.adapter.menuAdapter.MenuAdapter;
 
 import javax.inject.Inject;
 
+
+// ini adalah activity untuk
+// menunjukan list menu untuk laporan
+// yg nantinya akan dipilih oleh user
 public class ReportMenuActivity extends AppCompatActivity implements ReportMenuActivityContract.View {
 
+    // presenter yg diinject
     @Inject
     public ReportMenuActivityContract.Presenter presenter;
 
+
+    // deklarasi variabel
     private Context context;
     private ImageView back;
     private RecyclerView listMenuReport;
 
+
+    // fungsi yg dipanggil saat activity
+    // dibuat
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +47,24 @@ public class ReportMenuActivity extends AppCompatActivity implements ReportMenuA
         initWidget();
     }
 
+    // fungsi kedua untuk menginisialisasi
+    // seleurh variabel yg telah dideklarasi
     private void initWidget(){
+
+        // inisialisasi kontekt
         this.context = this;
 
+        // deklarasi dan inisialisasi
+        // object handler yg nantinya digunakan
+        // untuk menjalankan aksi
         injectDependency();
         presenter.attach(this);
         presenter.subscribe();
 
+
+        // inisialisasi tombol kembali
+        // yg jika ditekan maka akan
+        // menghancurkan activity
         back  = findViewById(R.id.back_imageview);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,6 +73,11 @@ public class ReportMenuActivity extends AppCompatActivity implements ReportMenuA
             }
         });
 
+        // inisialisasi recycleview
+        // yg nantinya akan diset adapter menu
+        // dengan item menu menu laporan
+        // yg jika salah satu itemnya diklik
+        // maka akan menjalankan activity report diagram
         listMenuReport = findViewById(R.id.list_report_menu_recycleview);
         listMenuReport.setAdapter(new MenuAdapter(context,MenuAdapter.REPORT_MENU_LIST, new MenuAdapter.OnMainMenuAdapterItemClickListener() {
             @Override
@@ -71,26 +97,33 @@ public class ReportMenuActivity extends AppCompatActivity implements ReportMenuA
                 }
             }
         }));
+
+        // mengeset layout manager untuk recycle view
         listMenuReport.setLayoutManager(new GridLayoutManager(context,2));
     }
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showProgress(Boolean show) {
 
     }
 
+    // untuk saat ini belum dibutuhkan
     @Override
     public void showError(String error) {
 
     }
 
+    // fungsi yg akan dipanggil saat activity
+    // dihancurkan
     @Override
     protected void onDestroy() {
         super.onDestroy();
         presenter.unsubscribe();
     }
 
-
+    // pemanggilan register
+    // dependensi injeksi untuk aktivity ini
     private void injectDependency(){
         ActivityComponent listcomponent = DaggerActivityComponent.builder()
                 .activityModule(new ActivityModule(this))

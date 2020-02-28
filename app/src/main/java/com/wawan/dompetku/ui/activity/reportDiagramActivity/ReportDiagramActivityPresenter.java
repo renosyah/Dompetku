@@ -18,26 +18,37 @@ import java.util.List;
 // seperti query ke db
 public class ReportDiagramActivityPresenter implements ReportDiagramActivityContract.Presenter {
 
+    // deklarasi variabel
     private ReportDiagramActivityContract.View view;
     private TransactionViewModel transactionViewModel;
 
+    // untuk saat ini kosong
+    // belum dibutuhkan
     @Override
     public void subscribe() {
 
     }
 
+    // untuk saat ini kosong
+    // belum dibutuhkan
     @Override
     public void unsubscribe() {
 
     }
 
+    // fungsi yg akan menrima data view
+    // yg nantinya akan digunakan oleh viewmodel
+    // atau untuk keperluhan bisnis aplikasi
+    // lainya
     @Override
     public void attach(ReportDiagramActivityContract.View view) {
         this.view = view;
         this.transactionViewModel = new ViewModelProvider((ViewModelStoreOwner)view).get(TransactionViewModel.class);
     }
 
-
+    // fungsi yg akan digunakan
+    // untuk melakukan query
+    // data transaksi dengan offset dan limit
     @Override
     public void getAllTransaction(int offset, int limit) {
         Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
@@ -49,6 +60,9 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
         transactionViewModel.all(offset, limit).observe((LifecycleOwner) view,observer);
     }
 
+    // fungsi yg akan digunakan
+    // untuk melakukan query
+    // data transaksi untuk diagram waterfall
     @Override
     public void getAllTransactionForWaterfall() {
         Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
@@ -60,6 +74,9 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
         transactionViewModel.all().observe((LifecycleOwner) view, observer);
     }
 
+    // fungsi yg akan digunakan
+    // untuk melakukan query
+    // data transaksi untuk diagram line
     @Override
     public void getAllTransactionForLine() {
         Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
@@ -71,6 +88,9 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
         transactionViewModel.all().observe((LifecycleOwner) view, observer);
     }
 
+    // fungsi yg akan digunakan
+    // untuk melakukan query
+    // sisa saldo oleh view
     @Override
     public void getBallance() {
         transactionViewModel.total().observe((LifecycleOwner) view, new Observer<Double>() {
@@ -81,6 +101,10 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
         });
     }
 
+    // fungsi yg akan digunakan
+    // untuk melakukan query
+    // data saldo pemasukkan
+    // dan pengeluaran
     @Override
     public void getIncomeExpense() {
         Observer<IncomeAndExpenseModel> observer = new Observer<IncomeAndExpenseModel>() {
@@ -92,6 +116,8 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
         transactionViewModel.getIncomeExpense().observe((LifecycleOwner) view,observer );
     }
 
+    // fungsi yg akan digunakan
+    // untuk menghapus data transaksi
     @Override
     public void deleteTransaction(TransactionModel t) {
         transactionViewModel.delete(t);
