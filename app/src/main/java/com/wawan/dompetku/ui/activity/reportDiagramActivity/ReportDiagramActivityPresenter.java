@@ -1,5 +1,8 @@
 package com.wawan.dompetku.ui.activity.reportDiagramActivity;
 
+import android.app.Activity;
+
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,6 +11,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import com.wawan.dompetku.model.transaction.IncomeAndExpenseModel;
 import com.wawan.dompetku.model.transaction.TransactionModel;
 import com.wawan.dompetku.model.transaction.TransactionViewModel;
+import com.wawan.dompetku.util.UtilFunction;
 
 import java.util.List;
 
@@ -51,13 +55,17 @@ public class ReportDiagramActivityPresenter implements ReportDiagramActivityCont
     // data transaksi dengan offset dan limit
     @Override
     public void getAllTransaction(int offset, int limit) {
-        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
+        transactionViewModel.all(offset, limit, new UtilFunction.Unit<List<TransactionModel>>() {
             @Override
-            public void onChanged(List<TransactionModel> transactionModels) {
-                view.onGetAllTransaction(transactionModels);
+            public void invoke(@Nullable List<TransactionModel> o) {
+                ((Activity) view).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.onGetAllTransaction(o);
+                    }
+                });
             }
-        };
-        transactionViewModel.all(offset, limit).observe((LifecycleOwner) view,observer);
+        });
     }
 
     // fungsi yg akan digunakan

@@ -31,7 +31,7 @@ public interface TransactionDao {
     // yg hasil querinya adakan diurutkan berdasarkan tanggal
     // dengan offset dan limit untuk pagination
     @Query("SELECT * FROM transaction_data ORDER BY date ASC LIMIT :limit OFFSET :offset")
-    public LiveData<List<TransactionModel>> all(int offset, int limit);
+    public List<TransactionModel> all(int offset, int limit);
 
 
     // perintah query untuk mengambil semua data transaksi
@@ -46,7 +46,7 @@ public interface TransactionDao {
     // dengan offset dan limit untuk pagination
     // namun hanya akan menampilkan data pemasukkan
     @Query("SELECT * FROM transaction_data WHERE flow = " + FLOW_INCOME + " ORDER BY date ASC LIMIT :limit OFFSET :offset")
-    public LiveData<List<TransactionModel>> allIncome(int offset, int limit);
+    public List<TransactionModel> allIncome(int offset, int limit);
 
 
     // perintah query untuk mengambil total saldo dari data transaksi

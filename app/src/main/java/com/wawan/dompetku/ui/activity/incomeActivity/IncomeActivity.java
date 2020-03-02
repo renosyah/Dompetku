@@ -66,7 +66,7 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
     // deklarasi adapter
     private ListReportAdapter listReportAdapter;
     private ArrayList<TransactionModel> transactions = new ArrayList<TransactionModel>();
-    private int offset = 0,limit = 15;
+    private int offset = 0,limit = 10;
 
 
     // fungsi yg dipanggil saat activity
@@ -307,12 +307,12 @@ public class IncomeActivity extends AppCompatActivity implements IncomeActivityC
     public void onDeleteTransaction() {
         Toast.makeText(context,context.getString(R.string.transaction_is_deleted),Toast.LENGTH_SHORT).show();
         offset = 0;
-        limit = 15;
+        limit = 10;
         transactions.clear();
 
         // for header
         transactions.add(new TransactionModel(true));
-        listReportAdapter.notifyDataSetChanged();
+        presenter.getAllTransactionIncome(offset,limit);
     }
 
     // yg akan dipanggil saat

@@ -38,16 +38,16 @@ public class TransactionViewModel extends AndroidViewModel {
         return repository.all();
     }
 
-    public LiveData<List<TransactionModel>> all(int offset, int limit){
-        return repository.all(offset, limit);
+    public void all(int offset, int limit, UtilFunction.Unit<List<TransactionModel>> t){
+        repository.all(offset, limit,t);
     }
 
     public LiveData<List<TransactionModel>> all(Date start, Date end){
         return repository.all(start, end);
     }
 
-    public LiveData<List<TransactionModel>> allIncome(int offset, int limit){
-        return repository.allIncome(offset, limit);
+    public void allIncome(int offset, int limit, UtilFunction.Unit<List<TransactionModel>> t){
+        repository.allIncome(offset, limit,t);
     }
 
     public LiveData<Double> total(Date start, Date end){

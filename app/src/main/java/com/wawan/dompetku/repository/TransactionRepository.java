@@ -42,16 +42,27 @@ public class TransactionRepository {
         return transactionDao.all();
     }
 
-    public LiveData<List<TransactionModel>> all(int offset, int limit) {
-        return transactionDao.all(offset, limit);
+    public void all(int offset, int limit, UtilFunction.Unit<List<TransactionModel>> t) {
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                t.invoke(transactionDao.all(offset, limit));
+            }
+        });
     }
 
     public LiveData<List<TransactionModel>> all(Date start, Date end) {
         return transactionDao.all(start, end);
     }
 
-    public LiveData<List<TransactionModel>> allIncome(int offset, int limit) {
-        return transactionDao.allIncome(offset, limit);
+    public void allIncome(int offset, int limit, UtilFunction.Unit<List<TransactionModel>> t) {
+        AppDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                t.invoke(transactionDao.allIncome(offset, limit));
+            }
+        });
+
     }
 
     public LiveData<Double> total(Date start, Date end) {

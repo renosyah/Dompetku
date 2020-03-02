@@ -88,7 +88,7 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
     private RecyclerView listReport;
     private ListReportAdapter listReportAdapter;
     private ArrayList<TransactionModel> transactions = new ArrayList<>();
-    private int offset = 0,limit = 15;
+    private int offset = 0,limit = 10;
 
 
     // fungsi yg dipanggil saat activity
@@ -510,12 +510,12 @@ public class ReportDiagramActivity extends AppCompatActivity implements ReportDi
     public void onDeleteTransaction() {
         Toast.makeText(context,context.getString(R.string.transaction_is_deleted),Toast.LENGTH_SHORT).show();
         offset = 0;
-        limit = 15;
+        limit = 10;
         transactions.clear();
 
         // for header
         transactions.add(new TransactionModel(true));
-        listReportAdapter.notifyDataSetChanged();
+        presenter.getAllTransaction(offset,limit);
     }
 
     // untuk saat ini belum dibutuhkan

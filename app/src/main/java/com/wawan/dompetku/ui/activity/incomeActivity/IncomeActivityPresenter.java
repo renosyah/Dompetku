@@ -1,6 +1,9 @@
 package com.wawan.dompetku.ui.activity.incomeActivity;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -8,6 +11,7 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.wawan.dompetku.model.transaction.TransactionModel;
 import com.wawan.dompetku.model.transaction.TransactionViewModel;
+import com.wawan.dompetku.util.UtilFunction;
 
 import java.util.List;
 
@@ -59,13 +63,17 @@ public class IncomeActivityPresenter implements IncomeActivityContract.Presenter
     // untuk query data transaksi
     @Override
     public void getAllTransactionIncome(int offset, int limit) {
-        Observer<List<TransactionModel>> observer = new Observer<List<TransactionModel>>() {
+        this.transactionViewModel.allIncome(offset, limit, new UtilFunction.Unit<List<TransactionModel>>() {
             @Override
-            public void onChanged(List<TransactionModel> transactionModels) {
-                view.onGetAllTransactionIncome(transactionModels);
+            public void invoke(@Nullable List<TransactionModel> o) {
+                ((Activity) view).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.onGetAllTransactionIncome(o);
+                    }
+                });
             }
-        };
-        this.transactionViewModel.allIncome(offset, limit).observe((LifecycleOwner) view, observer);
+        });
     }
 
     // fungsi yg akan dipanggil oleh view
