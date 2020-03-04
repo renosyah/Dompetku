@@ -34,6 +34,12 @@ produksi berkualitas tinggi yang kuat dan juga dapat digunakan bersama
 dengan Paging Library untuk menangani kumpulan data besar.
 
 
+* Tabel Database Transaksi
+
+![GitHub Logo](/design/releation.png) 
+
+
+
 sumber : [github.com/codepath/android_guides/wiki/Room-Guide](https://github.com/codepath/android_guides/wiki/Room-Guide)
 
 
