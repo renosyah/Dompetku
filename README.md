@@ -34,6 +34,8 @@ produksi berkualitas tinggi yang kuat dan juga dapat digunakan bersama
 dengan Paging Library untuk menangani kumpulan data besar.
 
 
+untuk project ini terdapat tabel untuk menyimpan data transaksi yakni tabel transaksi
+
 * Tabel Database Transaksi
 
 ![GitHub Logo](/design/releation.png) 
